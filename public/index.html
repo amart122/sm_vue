@@ -5,13 +5,46 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <script src="https://kit.fontawesome.com/e40b21e3a4.js" crossorigin="anonymous"></script>
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
   <body>
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
+    <header>
+      <div id='navbar_main' class='row-flex'>
+        <div class="logo-container nav-left col-2">
+          <a href="/dashboard" class="logo-main">
+            <img src="/static/site/images/logo.png" alt="Home">
+          </a>
+        </div>
+        <div class="nav-fill col-7">
+          <h2 class="title">TITLE</h2>
+        </div>
+        <div class="nav-right col-3">
+          <i tabindex="2" class="far fa-user-circle user"></i>
+          <div class="account_dropdown">
+            <ul>
+              <li class="account_option">
+                <a> Account </a>
+              </li>
+              <li class="account_option">
+                <a> Settings </a>
+              </li>
+              <li class="account_option">
+                <a> Log Out </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div id="__site-wrapper"></div>
+    <div class="footer">
+      <div class="container">
+        <p>Copyright SM</p>
+      </div>
+    </div>
   </body>
 </html>
