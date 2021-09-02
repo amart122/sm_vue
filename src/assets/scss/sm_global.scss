@@ -21,14 +21,11 @@ body {
   display: none !important;
 }
 
-#__site-wrapper {
+#__site-wrapper,
+#main-container-sm {
   background-color: #161619;
   min-height: 100vh;
   position: relative;
-	
-  #app {
-		height: inherit;
-	}
 }
 
 
