@@ -24,61 +24,61 @@
 </template>
 
 <script>
-// @ is an alias to /src
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 export default {
   name: "Login",
   methods: {
     firebase_login() {
+      const auth = getAuth();
       this.$sm_helpers.show_loader();
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(
-          this.$data.user.email,
-          this.$data.user.password
-        )
-        .then(async (userCredential) => {
-          const user = userCredential.user;
-          const id_token = await user.getIdToken();
-          this.axios({
-            method: "get",
-            url: "/api/users/" + user.uid,
-            headers: { Authorization: id_token },
-          })
-            .then((response) => {
-              if (response.data && response.data.username) {
-                this.$store.dispatch("setCurrentUser", response.data.username);
-                this.$router.replace({ name: "Dashboard" });
-              }
-            })
-            .catch((error) => {
-              this.$sm_helpers.show_alert(
-                "error",
-                "An error occurred while loging in."
-              );
-            })
-            .then(() => {
-              this.$sm_helpers.hide_loader();
-            });
+      signInWithEmailAndPassword(
+        auth,
+        this.$data.user.email,
+        this.$data.user.password
+      )
+      .then(async (userCredential) => {
+        const user = userCredential.user;
+        const id_token = await user.getIdToken();
+        this.axios({
+          method: "get",
+          url: "/api/users/" + user.uid,
+          headers: { Authorization: id_token },
         })
-        .catch((error) => {
-          this.$sm_helpers.hide_loader();
-          switch (error.code) {
-            case "auth/wrong-password":
-            case "auth/invalid-email":
-            case "auth/user-not-found":
-              this.$sm_helpers.show_alert(
-                "error",
-                "Password or email is incorrect."
-              );
-              break;
-            default:
-              this.$sm_helpers.show_alert(
-                "error",
-                "An error occurred while loging in."
-              );
-          }
-        });
+          .then((response) => {
+            if (response.data && response.data.username) {
+              this.$store.dispatch("setCurrentUser", response.data.username);
+              this.$router.replace({ name: "Dashboard" });
+            }
+          })
+          .catch((error) => {
+            this.$sm_helpers.show_alert(
+              "error",
+              "An error occurred while loging in."
+            );
+          })
+          .then(() => {
+            this.$sm_helpers.hide_loader();
+          });
+      })
+      .catch((error) => {
+        this.$sm_helpers.hide_loader();
+        switch (error.code) {
+          case "auth/wrong-password":
+          case "auth/invalid-email":
+          case "auth/user-not-found":
+            this.$sm_helpers.show_alert(
+              "error",
+              "Password or email is incorrect."
+            );
+            break;
+          default:
+            this.$sm_helpers.show_alert(
+              "error",
+              "An error occurred while loging in."
+            );
+        }
+      });
     },
   },
   data() {

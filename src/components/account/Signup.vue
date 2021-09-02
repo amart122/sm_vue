@@ -25,15 +25,16 @@
 </template>
 
 <script>
-// @ is an alias to /src
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 export default {
   name: "Sign Up",
   methods: {
     firebase_signup() {
       this.$sm_helpers.show_loader();
+      const auth = getAuth();
       // eslint-disable-next-line prettier/prettier, no-undef
-      firebase.auth().createUserWithEmailAndPassword(this.$data.user.email, this.$data.user.password)
+      createUserWithEmailAndPassword(auth, this.$data.user.email, this.$data.user.password)
         .then(async (userCredential) => {
           const user = userCredential.user;
           const id_token = await user.getIdToken();
