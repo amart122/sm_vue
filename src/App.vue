@@ -1,19 +1,20 @@
 <template>
   <div id="main-container-sm" class="">
-    <SideBar></SideBar>
-    <MainStage></MainStage>
+    <router-view></router-view>
+    <Loaders></Loaders>
+    <Alerts></Alerts>
   </div>
 </template>
 
 <script>
-import MainStage from "./components/MainStage";
-import SideBar from "./components/SideBar.vue";
+import Loaders from "./components/Loaders.vue";
+import Alerts from "./components/Alerts.vue";
 
 export default {
   name: "App",
   components: {
-    SideBar,
-    MainStage,
+    Loaders,
+    Alerts,
   },
 };
 </script>
