@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <script src="https://kit.fontawesome.com/e40b21e3a4.js" crossorigin="anonymous"></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-auth.js"></script>
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
   <body>
@@ -46,5 +49,18 @@
         <p>Copyright SM</p>
       </div>
     </div>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyDDtrpGfPnE5boJlK4av3fwZql5USuAOXE",
+        authDomain: "test-f9158.firebaseapp.com",
+        databaseURL: "https://test-f9158.firebaseio.com",
+        projectId: "test-f9158",
+        storageBucket: "test-f9158.appspot.com",
+        messagingSenderId: "793289375155",
+        appId: "1:793289375155:web:b3315b0b90f587c7769fc6",
+        measurementId: "G-1EL9LFVDLY"
+      };
+      firebase.initializeApp(firebaseConfig);
+    </script>
   </body>
 </html>
