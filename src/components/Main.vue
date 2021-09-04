@@ -1,7 +1,7 @@
 <template>
-  <div id="main-app-container" class="">
-    <MainStage></MainStage>
+  <div id="main-app-container" class="row-flex">
     <SideBar></SideBar>
+    <MainStage></MainStage>
   </div>
 </template>
 
@@ -27,4 +27,8 @@ export default {
 
 <style lang="scss">
 @import "src/assets/scss/sm_global.scss";
+
+#main-app-container {
+  height: 95vh;
+}
 </style>

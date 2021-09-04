@@ -10,6 +10,7 @@
 import Loaders from "./components/Loaders.vue";
 import Alerts from "./components/Alerts.vue";
 import { initializeApp } from 'firebase/app';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default {
   name: "App",
@@ -17,7 +18,7 @@ export default {
     Loaders,
     Alerts,
   },
-  mounted: () => {
+  mounted: function() {
     const firebaseConfig = {
       apiKey: "AIzaSyDDtrpGfPnE5boJlK4av3fwZql5USuAOXE",
       authDomain: "test-f9158.firebaseapp.com",
@@ -29,7 +30,22 @@ export default {
       measurementId: "G-1EL9LFVDLY"
     };
     initializeApp(firebaseConfig);
-  },
+      
+    // Check if user is logged in
+    const auth = getAuth();
+    onAuthStateChanged(auth, function(user) {
+      if (user) {
+        document.cookie = "_sm_uid=" + user.uid +";path=/;"
+      } else {
+        document.cookie = "_sm_uid=;path=/;max-age=0;"
+      }
+    });
+    const uid = this.$sm.find_cookie("_sm_uid")
+
+    if (uid) {
+      this.$store.dispatch("setCurrentUser", uid.split('=')[1]);
+    }
+  }
 };
 </script>
 

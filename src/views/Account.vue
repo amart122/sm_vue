@@ -11,6 +11,14 @@ export default {
   mounted: () => {
     document.querySelector("header").classList.add("hidden");
   },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      const uid = vm.$store.getters['getCurrentUser'];
+      if(uid && ['login', 'signup'].includes(to.name)) {
+        vm.$router.replace({ name: 'Dashboard'})
+      }
+    })
+  },
 };
 </script>
 

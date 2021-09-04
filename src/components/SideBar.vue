@@ -31,6 +31,7 @@ export default {
 <style scoped lang="scss">
 .side-bar-sm {
   border-right: 1px solid #fd5430;
+  height: 100%;
 }
 
 .side-container {
