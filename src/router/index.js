@@ -5,6 +5,7 @@ import Login from "@/components/account/Login.vue";
 import Main from "@/components/Main.vue";
 import Signup from "@/components/account/Signup.vue";
 import store from "../store";
+import chat_routes from "./modules/chat";
 
 const routes = [
   {
@@ -28,6 +29,7 @@ const routes = [
       authRequired: true,
     },
   },
+  ...chat_routes,
 ];
 
 const router = createRouter({

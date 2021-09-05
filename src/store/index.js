@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 import chat from "./modules/chat";
 import main from "./modules/main";
+import user from "./modules/user";
 
 const state = {
   username: null,
@@ -25,6 +26,7 @@ export default createStore({
   modules: {
     main,
     chat,
+    user,
   },
   state,
   getters,
