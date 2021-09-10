@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 export default {
   name: "Login",
@@ -41,9 +41,9 @@ export default {
         const user = userCredential.user;
         const id_token = await user.getIdToken();
         this.axios({
-          method: "get",
-          url: "/api/users/" + user.uid,
-          headers: { Authorization: id_token },
+          method: "post",
+          url: "/api/session/",
+          headers: { Authorization: id_token, User: user.uid },
         })
           .then((response) => {
             if (response.data && response.data.username) {
@@ -56,6 +56,7 @@ export default {
               "error",
               "An error occurred while loging in."
             );
+            signOut(auth);
           })
           .then(() => {
             this.$sm_helpers.hide_loader();
