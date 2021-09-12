@@ -1,26 +1,24 @@
 <template>
   <div class="chat_container row-flex">
-    <div class="chat_sidebar column-flex">
-      <OnlineList></OnlineList>
-    </div>
     <router-view></router-view>
+    <Modal1Container><SearchUser></SearchUser></Modal1Container>
   </div>
 </template>
 
 <script>
-import OnlineList from "@/components/friends/OnlineList.vue"
+import Modal1Container from "@/components/modals/Modal1Container.vue";
+import SearchUser from "@/components/modals/SearchUser.vue";
+
+
 export default {
   name: "Chat",
   components: {
-    OnlineList,
-  },
+    Modal1Container,
+    SearchUser,
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "@/assets/scss/sm_variables.scss";
-
-.chat_sidebar {
-  width: 15%;
-}
 </style>

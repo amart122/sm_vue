@@ -4,7 +4,9 @@
       <i class="fas fa-home"></i>
     </div>
     <div class="side-container">
-      <i class="fas fa-comments"></i>
+      <router-link to="/chat/home">
+        <i class="fas fa-comments"></i>
+      </router-link>
     </div>
     <div class="side-container">
       <i class="far fa-play-circle"></i>
@@ -41,6 +43,10 @@ export default {
   font-size: 2rem;
   margin: 32px 0;
   color: #fd5430;
+
+  a {
+    color: inherit;
+  }
 
   i {
     cursor: pointer;

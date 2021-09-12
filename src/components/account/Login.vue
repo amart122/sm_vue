@@ -43,7 +43,7 @@ export default {
         this.axios({
           method: "post",
           url: "/api/session/",
-          headers: { Authorization: id_token, User: user.uid },
+          headers: { Authorization: id_token },
         })
           .then((response) => {
             if (response.data && response.data.username) {
