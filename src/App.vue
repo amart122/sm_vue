@@ -30,22 +30,31 @@ export default {
       measurementId: "G-1EL9LFVDLY"
     };
     initializeApp(firebaseConfig);
-      
+    
     // Check if user is logged in
-    const auth = getAuth();
-    onAuthStateChanged(auth, function(user) {
-      if (user) {
-        document.cookie = "_sm_uid=" + user.uid +";path=/;"
-      } else {
-        document.cookie = "_sm_uid=;path=/;max-age=0;"
-      }
-    });
-    const uid = this.$sm.find_cookie("_sm_uid")
-
-    if (uid) {
-      this.$store.dispatch("setCurrentUser", uid.split('=')[1]);
+    this.createSession(this.axios, this.$store);
+  },
+  methods: {
+    createSession(axios, store) {
+      const auth = getAuth();
+      onAuthStateChanged(auth, async function(user) {
+        if (user) {
+          const id_token = await user.getIdToken()
+          axios({
+            method: "post",
+            url: "/api/session/",
+            headers: { Authorization: id_token },
+          }).then((response) => {
+            if (response.data && response.data.username) {
+              store.dispatch("setCurrentUser", response.data.username);
+            }
+          });
+        } else {
+          store.dispatch("setCurrentUser", null);
+        }
+      })
     }
-  }
+  },
 };
 </script>
 
