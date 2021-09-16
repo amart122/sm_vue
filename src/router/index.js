@@ -41,11 +41,6 @@ router.beforeEach((to, from, next) => {
   document
     .querySelector(".loader-wrapper #circle-wave-loader")
     .classList.remove("active");
-  if (!store.getters["getCurrentUser"]) {
-    document.querySelector("header").classList.add("hidden");
-  } else {
-    document.querySelector("header").classList.remove("hidden");
-  }
   next();
 });
 

@@ -1,5 +1,6 @@
 <template>
   <div id="main-container-sm" class="">
+    <Header></Header>
     <router-view></router-view>
     <Loaders></Loaders>
     <Alerts></Alerts>
@@ -9,6 +10,7 @@
 <script>
 import Loaders from "./components/Loaders.vue";
 import Alerts from "./components/Alerts.vue";
+import Header from './components/Header.vue';
 import { initializeApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
@@ -17,6 +19,7 @@ export default {
   components: {
     Loaders,
     Alerts,
+    Header,
   },
   mounted: function() {
     const firebaseConfig = {
@@ -47,10 +50,12 @@ export default {
           }).then((response) => {
             if (response.data && response.data.username) {
               store.dispatch("setCurrentUser", response.data.username);
+              document.cookie = `_sm_uid=${response.data.username};path=/`
             }
           });
         } else {
           store.dispatch("setCurrentUser", null);
+          document.cookie = `_sm_uid=XXX;path=/;max-age=0;`
         }
       })
     }

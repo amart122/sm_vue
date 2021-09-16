@@ -17,7 +17,8 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
-      if (!vm.$store.getters["getCurrentUser"]) {
+      const _user = document.cookie.split(";").map( (x) => x.split('=')[0] == '_sm_uid' ? x.split('=')[1] : null );
+      if (!vm.$store.getters["getCurrentUser"] && !_user.length) {
         vm.$router.push({ path: "/account/login" });
       }
     });
