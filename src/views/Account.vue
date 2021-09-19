@@ -8,15 +8,17 @@
 <script>
 export default {
   name: "Account",
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      const uid = vm.$store.getters['getCurrentUser'];
-      const _user = document.cookie.split(";").map( (x) => x.split('=')[0] == '_sm_uid' ? x.split('=')[1] : null );
-      if((uid || _user.length) && ['login', 'signup'].includes(to.name)) {
-        vm.$router.replace({ name: 'Dashboard'})
+  mounted: function(){
+    const vm = this;
+    document.location.href.split("/").forEach( (x) => { 
+      if(['login', 'signup'].includes(x)) {
+        setTimeout( () => {
+          vm.$router.push({ path: '/dashboard'})
+        }, 500)
       }
-    })
-  },
+      return
+    });
+  }
 };
 </script>
 

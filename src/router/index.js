@@ -36,12 +36,5 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
-router.beforeEach((to, from, next) => {
-  document.querySelector("#sm-alert-container").classList.add("hidden");
-  document
-    .querySelector(".loader-wrapper #circle-wave-loader")
-    .classList.remove("active");
-  next();
-});
 
 export default router;
