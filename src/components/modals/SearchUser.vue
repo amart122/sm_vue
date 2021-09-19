@@ -1,5 +1,6 @@
 <template>
     <div class="search_container column-flex">
+        <h3> Search Users </h3>
         <div class="input_container">
             <label for="search_username">Username</label>
             <input v-model="search_query" type="text" id="search_username">
@@ -9,9 +10,16 @@
         </div>
         <div id="search_user_results" class="result_container">
             <ul>
-                <li v-for="user in users" :key="user.username">
+                <li v-for="user in users" :key="user.username" :data-id="user.user_id">
                     {{ user.username }}
-                    <button><i class="fas fa-plus"></i></button>
+                    <button v-on:click="confirmFriendRequest($event)"><i class="fas fa-plus"></i></button>
+                    <div class='confirmation hidden'> 
+                        <section>
+                            <span> Add Friend? </span> 
+                            <button v-on:click="sendFriendRequest($event)">Yes</button>
+                            <button v-on:click="cancelFriendRequest($event)">No</button>
+                        </section>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -20,6 +28,8 @@
 </template>
 
 <script>
+import { getAuth, signOut } from "firebase/auth";
+
 export default {
     name: "SearchUser",
     data() {
@@ -39,9 +49,44 @@ export default {
                     if (response.data != undefined) {
                         this.$data['users'] = response.data
                     }
+                }).catch( (error) => {
+                    const auth = getAuth();
+                    if(error['logout']) {
+                        this.$sm.signOut(this, auth, signOut)
+                    }
                 })
             }
-        }
+        },
+        confirmFriendRequest(event) {
+            const li = event.target.closest("li")
+            for(const conf of document.querySelectorAll(".confirmation")) {
+                conf.classList.add("hidden")
+            };
+            li.querySelector(".confirmation").classList.remove("hidden")
+        },
+        cancelFriendRequest(event) {
+            const li = event.target.closest("li")
+            li.querySelector(".confirmation").classList.add("hidden")
+        },
+        sendFriendRequest(event) {
+            const user_id = event.target.closest("li").getAttribute("data-id")
+            this.axios.post(
+                `/api/users/${user_id}/friend_request/`, 
+                {},
+                {
+                    headers: { User: this.$store.getters['getCurrentUser'] }
+                }
+            ).then((response) => {
+                if(response && respose.status == 200) {
+                    event.target.closest(".confirmation").classList.add('hidden')
+                }
+            }).catch((error) => {
+                if(error['status'] == 400) {
+                    this.$sm_helpers.show_alert('error', "Friend Request already sent");
+                }
+            });
+        },
+
     }
 }
 </script>
