@@ -1,10 +1,10 @@
 <template>
-    <header>
+    <header v-if="this.$store.getters['getCurrentUser'] && true">
         <div id='navbar_main' class='row-flex'>
             <div class="logo-container nav-left col-2">
-                <a href="/dashboard" class="logo-main">
+                <router-link to="/dashboard" class="logo-main">
                     <img src="/static/site/images/logo.png" alt="Home">
-                </a>
+                </router-link>
             </div>
             <div class="nav-fill col-6">
                 <h2 class="title">TITLE</h2>
@@ -33,4 +33,5 @@
 export default {
     name: "Header",
 }
+
 </script>

@@ -9,5 +9,8 @@ export default [
         children: [
             { path: 'index', component: Index, alias: 'home' }
         ],
+        meta: {
+            authRequired: true,
+        },
     }
 ]

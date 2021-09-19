@@ -15,6 +15,9 @@ axios_instance.interceptors.response.use(function (response) {
         if(error.request.status == 403) {
             _error['status'] = error.request.status,
             _error['logout'] = true
+        } else {
+            _error['status'] = error.request.status,
+            _error['logout'] = false
         }
         return Promise.reject(_error);
 });

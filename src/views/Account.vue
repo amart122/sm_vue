@@ -8,17 +8,19 @@
 <script>
 export default {
   name: "Account",
-  mounted: function(){
+  created() {
     const vm = this;
-    document.location.href.split("/").forEach( (x) => { 
-      if(['login', 'signup'].includes(x)) {
-        setTimeout( () => {
-          vm.$router.push({ path: '/dashboard'})
-        }, 500)
+    this.unsubscribe = this.$store.subscribe((mutation, state) => {
+      if (mutation.type === "setCurrentUser") {
+        if(['login','signUp'].includes(vm.$router.currentRoute.value.name) && state.username) {
+          vm.$router.replace('/dashboard')
+        }
       }
-      return
     });
-  }
+  },
+  beforeDestroy() {
+    this.unsubscribe();
+  },
 };
 </script>
 
