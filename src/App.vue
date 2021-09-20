@@ -1,6 +1,6 @@
 <template>
   <div id="main-container-sm" class="">
-    <Header></Header>
+    <Header v-if="this.$store.getters['getCurrentUser'] && true"></Header>
     <router-view></router-view>
     <Loaders></Loaders>
     <Alerts></Alerts>
@@ -19,6 +19,9 @@ export default {
     Alerts,
     Header,
   },
+  mounted: function() {
+    this.$sm_helpers.start()
+  }
 };
 </script>
 
