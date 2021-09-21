@@ -70,6 +70,7 @@ export default {
         },
         sendFriendRequest(event) {
             const user_id = event.target.closest("li").getAttribute("data-id")
+            const vm = this;
             this.axios.post(
                 `/api/users/${user_id}/friend_request/`, 
                 {},
@@ -77,8 +78,9 @@ export default {
                     headers: { User: this.$store.getters['getCurrentUser'] }
                 }
             ).then((response) => {
-                if(response && respose.status == 200) {
-                    event.target.closest(".confirmation").classList.add('hidden')
+                if(response && response.data['success']) {
+                    this.$sm_helpers.show_alert('error', response.data['success']);
+                    event.target.closest(".confirmation").classList.add('hidden');
                 }
             }).catch((error) => {
                 if(error['status'] == 400) {
@@ -86,7 +88,6 @@ export default {
                 }
             });
         },
-
     }
 }
 </script>
