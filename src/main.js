@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
@@ -13,8 +13,9 @@ axios_instance.interceptors.response.use(function (response) {
     }, function (error) {
         const _error = {}
         if(error.request.status == 403) {
-            _error['status'] = error.request.status,
-            _error['logout'] = true
+            signOut(getAuth())
+            document.cookie = "_sm_uid=;max-age=0"
+            _error['redirect'] = '/acccount/login'
         } else {
             _error['status'] = error.request.status,
             _error['logout'] = false
