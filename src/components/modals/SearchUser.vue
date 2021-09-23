@@ -51,8 +51,8 @@ export default {
                     }
                 }).catch( (error) => {
                     const auth = getAuth();
-                    if(error['logout']) {
-                        this.$sm.signOut(this, auth, signOut)
+                    if(error['redirect']) {
+                        this.$router.replace(error['redirect'])
                     }
                 })
             }
