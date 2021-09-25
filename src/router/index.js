@@ -4,6 +4,7 @@ import Account from "../views/Account.vue";
 import Login from "@/components/account/Login.vue";
 import Main from "@/components/Main.vue";
 import Signup from "@/components/account/Signup.vue";
+import Logout from "@/components/account/Logout.vue";
 import store from "../store";
 import chat_routes from "./modules/chat";
 
@@ -19,6 +20,7 @@ const routes = [
     children: [
       { path: "login", name: "login", component: Login },
       { path: "signup", name: "signup", component: Signup },
+      { path: "logout", name: "logout", component: Logout },
     ],
   },
   {

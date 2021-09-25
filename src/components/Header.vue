@@ -34,7 +34,9 @@
                                 <a> Settings </a>
                             </li>
                             <li class="account_option">
-                                <a> Log Out </a>
+                                <router-link to="/account/logout" class="logo-main">
+                                    Log Out
+                                </router-link>
                             </li>
                         </ul>
                     </div>
@@ -78,7 +80,9 @@ export default {
     watch: {
         loggedIn: {
             handler (value) {
-                this.getNotifications()
+                if(value) {
+                    this.getNotifications()
+                }
             },
             immediate: true
         },
