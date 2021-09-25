@@ -23,19 +23,21 @@
                         </ul>
                     </div>
                 </div>
-                <i tabindex="2" class="far fa-user-circle user"></i>
-                <div class="account_dropdown">
-                    <ul>
-                        <li class="account_option">
-                            <a> Account </a>
-                        </li>
-                        <li class="account_option">
-                            <a> Settings </a>
-                        </li>
-                        <li class="account_option">
-                            <a> Log Out </a>
-                        </li>
-                    </ul>
+                <div class="dropdown_container profile">
+                    <input type="checkbox" class="dropdown_btn far fa-user-circle user">
+                    <div class="dropdown_list">
+                        <ul>
+                            <li class="account_option">
+                                <a> Account </a>
+                            </li>
+                            <li class="account_option">
+                                <a> Settings </a>
+                            </li>
+                            <li class="account_option">
+                                <a> Log Out </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -105,21 +107,19 @@ export default {
 
     .dropdown_btn {
         left: 50%;
-        font-size: 3vh;
         top: 25%;
         background: none;
         border: none;
         color: #FD5430;
         height: 0;
+        z-index: 12;
 
         &::before {
             display: block;
         }
-
         i {
             font-size: inherit;
         }
-
         &:checked {
             &+ .dropdown_list {
                 display: block;
@@ -219,6 +219,7 @@ export default {
         }
     }
 
+    // Num Notifications
     .dropdown_btn.fas.fa-bell::after {
         content: attr(data-value);
         color: white;
@@ -231,5 +232,32 @@ export default {
         background: blue;
         border-radius: 4px;
     }
+
+    .fas.fa-bell {
+        font-size: 3vh;
+    }
     
+
+    .profile {
+        min-height: 5vh;
+
+        .dropdown_list {
+            top: 7vh;
+            left: -25%;
+        }
+    }
+
+    .fa-user-circle.user {
+        font-size: 5vh;
+		font-weight: 100;
+		color: #FD5430;
+        width: 0px;
+
+        &::before {
+            position: absolute;
+            top: 1vh;
+            left: 7vh;
+            margin: auto;
+        }
+    }
 </style>
