@@ -15,15 +15,12 @@
                     <div class="dropdown_list">
                         <ul>
                             <li class="row-flex" v-for="(notification, index) in notifications" v-bind:key="notification.id">
-                                <router-link to="/chat/home" class="logo-main">
-                                    {{notification.message}}
-                                </router-link>
-                                <span> X </span>
+                                <FriendRequest v-if="notification.content_type == 11" :notification="notification"></FriendRequest>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div class="dropdown_container profile">
+                <div class="dropdown_container profile" aria-hidden="true">
                     <input type="checkbox" class="dropdown_btn far fa-user-circle user">
                     <div class="dropdown_list">
                         <ul>
@@ -47,8 +44,13 @@
 </template>
 
 <script>
+import FriendRequest from "./notifications/FriendRequest.vue";
+
 export default {
     name: "Header",
+    components: {
+        FriendRequest,
+    },
     data() {
         return { notifications: [], }
     },
@@ -67,7 +69,7 @@ export default {
             }).then((response) => {
                 this.$data.notifications = response.data
             })
-        }
+        },
     },
     computed: {
         loggedIn() {
