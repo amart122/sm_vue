@@ -15,7 +15,7 @@ axios_instance.interceptors.response.use(function (response) {
         if(error.request.status == 403) {
             signOut(getAuth())
             document.cookie = "_sm_uid=;max-age=0"
-            _error['redirect'] = '/acccount/login'
+            _error['redirect'] = '/account/login'
         } else {
             _error['status'] = error.request.status,
             _error['logout'] = false
