@@ -63,12 +63,15 @@ router.beforeEach((to, from, next) => {
         setTimeout( () => {
             $sm_helpers.hide_loader();
             if (!store.getters["getCurrentUser"]) {
+                document.title = "LOGIN"
                 next({ path: '/account/login' })
             } else {
+                document.title = to.name
                 next()
             }
         }, 2000)
     } else {
+        document.title = to.name
         next();
     }
 });
