@@ -2,9 +2,9 @@
     <div>
         <ul>
             <li v-for="friend in this.$store.getters['user/getFriends'].slice(0, page * 10)" :key="friend.username">
-                <a href="#">
+                <router-link :to="{name: 'Message', params: { id: 'new' }, query: { fid: friend.id } }" class="logo-main">
                     <h5>{{ friend.username }}</h5>
-                </a>
+                </router-link>
             </li>
         </ul>
         <div class="search_container column-flex">
