@@ -13,7 +13,6 @@ export default {
         const auth = getAuth();
         signOut(auth).then((response) => {
             this.$store.dispatch('setCurrentUser', null);
-            document.cookie = "_sm_uid=;max-age=0";
         })
     }
 }

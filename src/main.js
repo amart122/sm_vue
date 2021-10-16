@@ -14,7 +14,6 @@ axios_instance.interceptors.response.use(function (response) {
         const _error = {}
         if(error.request.status == 403) {
             signOut(getAuth())
-            document.cookie = "_sm_uid=;max-age=0"
             _error['redirect'] = '/account/login'
         } else {
             _error['status'] = error.request.status,
@@ -41,7 +40,6 @@ const auth = getAuth();
 onAuthStateChanged(auth, async function(user) {
     if (user) {
         const id_token = await user.getIdToken();
-        store.dispatch("setCurrentUser", user.uid);
         axios_instance({
             method: "post",
             url: "/api/session/",
@@ -49,7 +47,6 @@ onAuthStateChanged(auth, async function(user) {
         }).then((response) => {
             if (response.data && response.data.username) {
                 store.dispatch("setCurrentUser", response.data.username);
-                document.cookie = `_sm_uid=${response.data.username};path=/`
             }
         });
     }
@@ -61,9 +58,16 @@ router.beforeEach((to, from, next) => {
     document
         .querySelector(".loader-wrapper #circle-wave-loader")
         .classList.remove("active");
-
-    if(!store.getters['getCurrentUser'] && to.meta.authRequired) {
-        next({ path: '/account/login' })
+    if(to.meta.authRequired && !store.getters["getCurrentUser"]) {
+        $sm_helpers.show_loader();
+        setTimeout( () => {
+            $sm_helpers.hide_loader();
+            if (!store.getters["getCurrentUser"]) {
+                next({ path: '/account/login' })
+            } else {
+                next()
+            }
+        }, 2000)
     } else {
         next();
     }
