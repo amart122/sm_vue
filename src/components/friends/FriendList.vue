@@ -5,6 +5,7 @@
                 <router-link :to="{name: 'Message', params: { id: 'new' }, query: { fid: friend.id } }" class="logo-main">
                     <h5>{{ friend.username }}</h5>
                 </router-link>
+                <i v-on:click="requestMessageRoom($event)" :data-fid="friend.id" class="fas fa-comment-medical"></i>
             </li>
         </ul>
         <div class="search_container column-flex">
@@ -33,12 +34,29 @@ export default {
             vm.$data.page += 1;
         }
     },
+    methods: {
+        requestMessageRoom(event) {
+            const fid = event.target.dataset.fid
+            if(fid) {
+                this.axios.get(
+                    "api/friends/"+ fid +"/chat",{
+                    headers: { User: this.$store.getters['getCurrentUser'] }
+                }).then( (response) => {
+                    if(response.data.room_uid) {
+                        this.$router.push({name: 'Message', params: { id: response.data.room_uid }})
+                    }
+                })
+            }
+        }
+    }
 }
 </script>
 
 <style lang="scss" scoped>
 li {
     min-height: 2rem;
+    display: flex;
+    justify-content: space-between;
 }
 
 a {
