@@ -14,7 +14,14 @@ export default {
     }
   },
   created() {
-    this.axios.get('/chat/message/'+this.$route.params.id)
+    this.axios.get(
+      'api/message_room/'+this.$route.params.id,
+      {
+        headers: { User: this.$store.getters['getCurrentUser'] }
+      }
+    ).then( (response) => {
+      console.log(response.data);
+    })
   },
 };
 </script>
