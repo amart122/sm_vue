@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class='friend_list'>
         <ul>
             <li v-for="friend in this.$store.getters['user/getFriends'].slice(0, page * 10)" :key="friend.username">
                 <router-link :to="{name: 'Message', params: { id: 'new' }, query: { fid: friend.id } }" class="logo-main">
@@ -57,10 +57,13 @@ li {
     min-height: 2rem;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 a {
     text-decoration: none;
     color: white;
+    width: inherit;
+    overflow: hidden;
 }
 </style>

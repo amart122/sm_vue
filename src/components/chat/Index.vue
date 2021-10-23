@@ -46,6 +46,15 @@ export default {
 
   .chat_sidebar {
     width: 15vw;
+
+    ::v-deep .friend_list {
+      width: inherit;
+      padding: 0px 5px;
+
+      li i {
+        margin-left: 0.5em;
+      }
+    }
   }
 
   ul {
