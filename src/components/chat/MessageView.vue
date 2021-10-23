@@ -1,11 +1,19 @@
 <template>
-  <div class="_root">
+  <div class="message_root">
     <h1 v-if="this.other_participant != null">{{this.other_participant.username}}</h1>
-    <ul class="messages">
-      <li v-for="message in this.messages" class="message" :key="message.id">
-        {{message.content}} || {{message.updated_at}}
-      </li>
-    </ul>
+    <div class="message_container">
+      <ul class="messages">
+        <li v-for="message in this.messages" :class="'message '+(message.owner ? 'sent' : 'received')" :key="message.id">
+          {{message.content}} || {{message.updated_at}}
+          <span class="sent_at">{{message.sent_at}}</span>
+        </li>
+      </ul>
+    </div>
+    <div class="new_message_container">
+      <button class="options" type="button"><i class="fas fa-ellipsis-v"></i></button>
+      <textarea class="message_input" id="new_message" cols="30"></textarea>
+      <button class="send" type="button" v-on:click="sendMessage()"><i class="fas fa-arrow-circle-right"></i></button>
+    </div>
   </div>
 </template>
 
@@ -51,5 +59,106 @@ export default {
       }
     })
   },
+  methods: {
+    sendMessage() {
+      console.log("CL")
+    },
+  },
 };
 </script>
+
+<style lang="scss" scoped>
+@import "src/assets/scss/sm_variables.scss";
+
+.message_root {
+  width: 100vw;
+  height: 95vh;
+}
+
+h1 {
+  text-align: center;
+  color: $main-orange;
+}
+
+.message_container {
+  position: absolute;
+  bottom: 5vh;
+  width: 100vw;
+  margin-bottom: 1rem;
+  
+  ul {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: 0.3rem;
+  }
+}
+
+.message {
+  min-height: 25px;
+  display: flex;
+  position: relative;
+  width: fit-content;
+  padding: 5px;
+  margin: 10px 15px;
+  max-width: 80%;
+  border-radius: 8px;
+
+  .sent_at {
+    position: absolute;
+    font-size: 0.3em;
+    bottom: -10px;
+    color: gray;
+  }
+}
+
+.message.sent {
+  background-color: #943725;
+  align-self: flex-end;
+  border-bottom-right-radius: 0px;
+
+  .sent_at {
+    right: 0;
+  }
+}
+
+.message.received {
+  background-color: lightblue;
+  border-bottom-left-radius: 0px;
+  
+  .sent_at {
+    left: 0;
+  }
+}
+
+.new_message_container {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  width: 100%;
+  padding: 0px 0px;
+  height: 5vh;
+
+  .options {
+    background: transparent;
+    border: none;
+    width: 10%;
+  }
+
+  .message_input {
+    resize: none;
+    border: none;
+    background-color: #464c50;
+    width: 80%;
+    color: white;
+  }
+
+  .send {
+    width: 18%;
+    background-color: $main-orange;
+    border: none;
+    font-size: 25px;
+    opacity: 0.5;
+  }
+}
+</style>
