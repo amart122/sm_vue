@@ -1,67 +1,113 @@
 <template>
   <div class="message_root">
-    <h1 v-if="this.other_participant != null">{{this.other_participant.username}}</h1>
+    <h1 v-if="this.other_participant != null">
+      {{ this.other_participant.username }}
+    </h1>
     <div class="message_container">
       <ul class="messages">
-        <li v-for="message in this.messages" :class="'message '+(message.owner ? 'sent' : 'received')" :key="message.id">
-          {{message.content}} || {{message.updated_at}}
-          <span class="sent_at">{{message.sent_at}}</span>
+        <li
+          v-for="message in this.messages"
+          :class="'message ' + (message.owner ? 'sent' : 'received')"
+          :key="message.id"
+        >
+          {{ message.content }} || {{ message.updated_at }}
+          <span class="sent_at">{{ message.sent_at }}</span>
         </li>
       </ul>
     </div>
     <div class="new_message_container">
-      <button class="options" type="button"><i class="fas fa-ellipsis-v"></i></button>
-      <textarea class="message_input" id="new_message" cols="30"></textarea>
-      <button class="send" type="button" v-on:click="sendMessage()"><i class="fas fa-arrow-circle-right"></i></button>
+      <button class="options" type="button">
+        <i class="fas fa-ellipsis-v"></i>
+      </button>
+      <textarea
+        class="message_input"
+        id="new_message"
+        cols="30"
+        v-on:keydown.enter.exact.prevent="sendMessage()"
+      ></textarea>
+      <button class="send" type="button" v-on:click="sendMessage()">
+        <i class="fas fa-arrow-circle-right"></i>
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-
 export default {
   name: "MessageView",
   data() {
     return {
       other_participant: null,
-      messages: []
-    }
+      messages: [],
+      socket: null,
+    };
   },
   created() {
-    this.axios.get(
-      'api/message_room/'+this.$route.params.id,
-      {
-        headers: { User: this.$store.getters['getCurrentUser'] }
-      }
-    ).then( (response) => {
-      this.messages = response.data.message_set;
+    this.axios
+      .get("api/message_room/" + this.$route.params.id, {
+        headers: { User: this.$store.getters["getCurrentUser"] },
+      })
+      .then((response) => {
+        this.messages = response.data.message_set;
 
-      const user_ids = this.$sm.map_without_duplicates(
-        response.data.message_set,
-        "user_id",
-        { cond_check: "owner", check_return: null }
-      )
-      
-      // Get other participant username
-      if(this.$store.getters['user/getFriends'].length) {
-        const user = this.$store.getters['user/getFriends'].find(f => user_ids.includes(f.id))
-        if(user) {
-          this.other_participant = user
-        }
-      } else {
-        this.$store.dispatch("user/updateFriends")
-          .then( () => {
-            const user = this.$store.getters['user/getFriends'].find(f => user_ids.includes(f.id))
-            if(user) {
-              this.other_participant = user
+        const user_ids = this.$sm.map_without_duplicates(
+          response.data.message_set,
+          "user_id",
+          { cond_check: "owner", check_return: null }
+        );
+
+        // Get other participant username
+        if (this.$store.getters["user/getFriends"].length) {
+          const user = this.$store.getters["user/getFriends"].find((f) =>
+            user_ids.includes(f.id)
+          );
+          if (user) {
+            this.other_participant = user;
+          }
+        } else {
+          this.$store.dispatch("user/updateFriends").then(() => {
+            const user = this.$store.getters["user/getFriends"].find((f) =>
+              user_ids.includes(f.id)
+            );
+            if (user) {
+              this.other_participant = user;
             }
-        })
-      }
-    })
+          });
+        }
+
+        return response.data.id;
+      })
+      .then((room_id) => {
+        const socket = new WebSocket(
+          `ws:////127.0.0.1:8000/ws/sm/chat/${room_id}/?Authentication=${this.$store.getters["getCurrentUser"]}`
+        );
+        socket.onopen = () => {
+          this.socket = socket;
+        };
+        socket.onclose = (event) => {
+          this.socket = null;
+          if (event.wasClean) {
+            console.log(
+              `[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`
+            );
+          } else {
+            console.log("[close] Connection died");
+          }
+        };
+        socket.onmessage = (event) => {
+          const new_message = JSON.parse(event.data);
+          this.messages.push(new_message);
+        };
+      });
   },
   methods: {
     sendMessage() {
-      console.log("CL")
+      if (this.socket) {
+        this.socket.send(
+          JSON.stringify({ msg: document.getElementById("new_message").value })
+        );
+        document.getElementById("new_message").value = "";
+      }
     },
   },
 };
@@ -85,7 +131,7 @@ h1 {
   bottom: 5vh;
   width: 100vw;
   margin-bottom: 1rem;
-  
+
   ul {
     display: flex;
     flex-direction: column;
@@ -125,7 +171,7 @@ h1 {
 .message.received {
   background-color: lightblue;
   border-bottom-left-radius: 0px;
-  
+
   .sent_at {
     left: 0;
   }
