@@ -16,6 +16,7 @@
                         <ul>
                             <li class="row-flex" v-for="(notification, index) in notifications" v-bind:key="notification.id">
                                 <FriendRequest v-if="notification.content_type == 11" :notification="notification"></FriendRequest>
+                                <MessageNotification v-if="notification.content_type == 17" :notification="notification"></MessageNotification>
                             </li>
                         </ul>
                     </div>
@@ -45,11 +46,13 @@
 
 <script>
 import FriendRequest from "./notifications/FriendRequest.vue";
+import MessageNotification from "./notifications/MessageNotification.vue";
 
 export default {
     name: "Header",
     components: {
         FriendRequest,
+        MessageNotification,
     },
     data() {
         return { notifications: [], }

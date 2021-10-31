@@ -104,7 +104,10 @@ export default {
     sendMessage() {
       if (this.socket) {
         this.socket.send(
-          JSON.stringify({ msg: document.getElementById("new_message").value })
+          JSON.stringify({ 
+            type: "send",
+            msg: document.getElementById("new_message").value 
+          })
         );
         document.getElementById("new_message").value = "";
       }
