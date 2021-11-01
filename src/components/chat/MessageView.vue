@@ -49,7 +49,10 @@ export default {
       })
       .then((response) => {
         this.messages = response.data.message_set;
-
+        setTimeout( () => {
+          const messages_cont = document.querySelector('.message_container');
+          messages_cont.scrollTop = messages_cont.scrollHeight;
+        }, 300)
         const user_ids = this.$sm.map_without_duplicates(
           response.data.message_set,
           "user_id",
@@ -121,7 +124,7 @@ export default {
 
 .message_root {
   width: 100vw;
-  height: 95vh;
+  height: 90vh;
 }
 
 h1 {
@@ -131,9 +134,23 @@ h1 {
 
 .message_container {
   position: absolute;
-  bottom: 5vh;
+  bottom: 3.3vh;
   width: 100vw;
+  height: 85vh;
+  overflow-y: scroll;
   margin-bottom: 1rem;
+  scrollbar-width: thin;          /* "auto" or "thin" */
+  scrollbar-color: transparent orange;
+
+  &::-webkit-scrollbar {
+    width: 0.1pc;
+    background-color: transparent;
+    opacity: 0.1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #FD5430;
+  }
 
   ul {
     display: flex;
