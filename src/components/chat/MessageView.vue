@@ -100,6 +100,10 @@ export default {
         socket.onmessage = (event) => {
           const new_message = JSON.parse(event.data);
           this.messages.push(new_message);
+          setTimeout( () => {
+            const messages_cont = document.querySelector('.message_container');
+            messages_cont.scrollTop = messages_cont.scrollHeight;
+          }, 300)
         };
       });
   },
