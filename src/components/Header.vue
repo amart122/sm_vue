@@ -10,7 +10,7 @@
                 <h2 class="title">TITLE</h2>
             </div>
             <div class="nav-right col-3">
-                <div class="dropdown_container">
+                <div class="dropdown_container bell">
                     <input type="checkbox" class="dropdown_btn fas fa-bell">
                     <div class="dropdown_list">
                         <ul>
@@ -22,7 +22,7 @@
                     </div>
                 </div>
                 <div class="dropdown_container profile" aria-hidden="true">
-                    <input type="checkbox" class="dropdown_btn far fa-user-circle user">
+                    <input id="user_profile_options" type="checkbox" class="dropdown_btn user">
                     <div class="dropdown_list">
                         <ul>
                             <li class="account_option">
@@ -38,6 +38,7 @@
                             </li>
                         </ul>
                     </div>
+                    <label for="user_profile_options"></label>
                 </div>
             </div>
         </div>
@@ -112,6 +113,10 @@ export default {
         justify-content: center;
         align-items: center;
         z-index: 11;
+    }
+
+    .bell {
+        padding-bottom: 7px;
     }
 
     .dropdown_btn {
@@ -234,7 +239,7 @@ export default {
         color: white;
         font-size: 0.5em;
         position: absolute;
-        top: 35%;
+        top: 15px;
         z-index: 12;
         left: 50%;
         border: 0.5px solid white;
@@ -251,16 +256,16 @@ export default {
         min-height: 5vh;
 
         .dropdown_list {
-            top: 7vh;
-            left: -25%;
+            top: 6vh;
         }
     }
 
-    .fa-user-circle.user {
-        font-size: 5vh;
+    .user {
+        padding-top: 7px;
+        font-size: 3.5vh;
 		font-weight: 100;
 		color: #FD5430;
-        width: 0px;
+        display: none;
 
         &::before {
             position: absolute;
@@ -268,5 +273,21 @@ export default {
             left: 7vh;
             margin: auto;
         }
+
+        & + .dropdown_list {
+            width: 100%;
+
+
+            & + label {
+                background-image: url("../assets/images/icons/user.png");
+                background-size: 90%;
+                background-position: right center;
+                background-repeat: no-repeat;
+                height: 2pc;
+                width: 2pc;
+            }
+        }
+
+        
     }
 </style>
