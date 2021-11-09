@@ -3,6 +3,7 @@ import axios from "axios";
 const state = () => ({
   online_friends: [],
   friends: [],
+  notifications: []
 });
 
 const getters = {
@@ -11,7 +12,10 @@ const getters = {
   },
   getFriends(state) {
     return state.friends;
-  }
+  },
+  getNotifications(state) {
+    return state.notifications;
+  },
 };
 
 const actions = {
@@ -34,6 +38,9 @@ const actions = {
       commit("updateFriends", []);
     })
   },
+  updateNotifications({commit}, notifications) {
+    commit("updateNotifications", notifications)
+  },
 };
 
 const mutations = {
@@ -43,6 +50,20 @@ const mutations = {
   updateFriends(state, new_friends) {
     state.friends = [...state.friends, ...new_friends];
   },
+  updateNotifications(state, notifications) {
+    if(notifications instanceof Array) {
+      state.notifications = notifications;
+    } else {
+      for(const notification of state.notifications) {
+        if(notification.id === notification.id) {
+          notification.message = notifications.content;
+        }
+        break;
+      }
+
+      state.notifications = state.notifications;
+    }
+  }
 };
 
 export default {

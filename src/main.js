@@ -48,6 +48,20 @@ onAuthStateChanged(auth, async function(user) {
             if (response.data && response.data.username) {
                 store.dispatch("setCurrentUser", response.data.username);
             }
+        }).then((response) => {
+            const socket = new WebSocket(
+                `ws:////127.0.0.1:8000/ws/sm/events/?Authentication=${store.getters["getCurrentUser"]}`
+            );
+            socket.onmessage = (event) => {
+                try {
+                    const msg = JSON.parse(event.data)
+                    if(msg.type == "notification") {
+                        store.dispatch("user/updateNotifications", msg.notification)
+                    }
+                } catch (exception) {
+                    console.log("MESSAGE NOT PARSABLE")
+                }
+            }
         });
     }
 })
@@ -75,7 +89,6 @@ router.beforeEach((to, from, next) => {
         next();
     }
 });
-
 const app = createApp(App);
 app.config.globalProperties.$sm = $sm;
 app.config.globalProperties.$sm_helpers = $sm_helpers;

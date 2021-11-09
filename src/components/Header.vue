@@ -11,10 +11,10 @@
             </div>
             <div class="nav-right col-3">
                 <div class="dropdown_container bell">
-                    <input type="checkbox" class="dropdown_btn fas fa-bell">
+                    <input type="checkbox" class="dropdown_btn fas fa-bell" :data-value="getNotifications.length">
                     <div class="dropdown_list">
                         <ul>
-                            <li class="row-flex" v-for="(notification, index) in notifications" v-bind:key="notification.id">
+                            <li class="row-flex" v-for="notification in getNotifications" v-bind:key="notification.id">
                                 <FriendRequest v-if="notification.content_type == 11" :notification="notification"></FriendRequest>
                                 <MessageNotification v-if="notification.content_type == 17" :notification="notification"></MessageNotification>
                             </li>
@@ -58,49 +58,27 @@ export default {
     data() {
         return { notifications: [], }
     },
-    methods: {
+    created() {
         // uncheck() {
         //     setTimeout( () => {
         //         document.querySelector("input.dropdown_btn").checked = false;
         //     }, 250)
         // },
-        getNotifications() {
-            this.axios({
-                method: "get",
-                url: "/api/notifications",
-                data: {},
-                headers: { User: this.$store.getters['getCurrentUser'] },
-            }).then((response) => {
-                this.$data.notifications = response.data
-            })
-        },
+        this.axios({
+            method: "get",
+            url: "/api/notifications",
+            data: {},
+            headers: { User: this.$store.getters['getCurrentUser'] },
+        }).then((response) => {
+            this.$store.dispatch('user/updateNotifications', response.data)
+        })
     },
     computed: {
-        loggedIn() {
-            return this.$store.getters['getCurrentUser'] && true
-        },
-        noNotifications() {
-            return this.$data.notifications.length
+        getNotifications() {
+            console.log(this.$store.getters['user/getNotifications'])
+            return this.$store.getters['user/getNotifications']
         }
-    },
-    watch: {
-        loggedIn: {
-            handler (value) {
-                if(value) {
-                    this.getNotifications()
-                }
-            },
-            immediate: true
-        },
-        noNotifications: {
-            handler (value) {
-                if(value > 0) {
-                    document.querySelector('.dropdown_btn.fas.fa-bell').setAttribute('data-value', value)
-                }
-            },
-            immediate: true
-        }
-    },
+    }
 }
 
 </script>
