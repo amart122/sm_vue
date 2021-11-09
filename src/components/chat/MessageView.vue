@@ -120,6 +120,12 @@ export default {
       }
     },
   },
+  beforeRouteLeave(to, from, next) {
+    if(this.socket) {
+      this.socket.close(1000);
+    }
+    next()
+  }
 };
 </script>
 
