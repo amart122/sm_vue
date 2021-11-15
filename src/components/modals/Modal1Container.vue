@@ -25,7 +25,7 @@ export default ({
     width: 100vw;
     height: 100vh;
     z-index: 10;
-    display: flex;
+    display: none;
     justify-content: center;
     padding-top: 25%;
   }
