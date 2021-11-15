@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 <template>
   <div class="signup_bck">
-    <h1>Sing Up</h1>
+    <h1>Sign Up</h1>
     <div class="sm-form">
       <div class="input_container">
         <label>Email: </label>

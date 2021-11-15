@@ -22,17 +22,30 @@ axios_instance.interceptors.response.use(function (response) {
         return Promise.reject(_error);
 });
 
-// Create Firebase Instance
-const firebaseConfig = {
-    apiKey: (process.env.FB_API_KEY || "AIzaSyDDtrpGfPnE5boJlK4av3fwZql5USuAOXE"),
-    authDomain: (process.env.FB_AUTH_DOMAIN || "test-f9158.firebaseapp.com"),
-    databaseURL: (process.env.FB_DB_URL || "https://test-f9158.firebaseio.com"),
-    projectId: (process.env.FB_PROJECT_ID || "test-f9158"),
-    storageBucket: (process.env.FB_STORAGE_BUCKET || "test-f9158.appspot.com"),
-    messagingSenderId: (process.env.FB_MSGSEND_ID || "793289375155"),
-    appId: (process.env.FB_APP_ID || "1:793289375155:web:b3315b0b90f587c7769fc6"),
-    measurementId: (process.env.FB_MEASURE_ID || "G-1EL9LFVDLY")
-};
+// Create Firebase 
+let firebaseConfig = null
+if(process.env.NODE_ENV === "development") {
+    firebaseConfig = {
+        apiKey: "AIzaSyDDtrpGfPnE5boJlK4av3fwZql5USuAOXE",
+        authDomain: "test-f9158.firebaseapp.com",
+        databaseURL: "https://test-f9158.firebaseio.com",
+        projectId: "test-f9158",
+        storageBucket: "test-f9158.appspot.com",
+        messagingSenderId: "793289375155",
+        appId: "1:793289375155:web:b3315b0b90f587c7769fc6",
+        measurementId: "G-1EL9LFVDLY"
+    };
+} else {
+    firebaseConfig = {
+        apiKey: "AIzaSyAztGZeWuhkTq6NYZyDAWl4rEEEyIUqzrc",
+        authDomain: "simul-music.firebaseapp.com",
+        projectId: "simul-music",
+        storageBucket: "simul-music.appspot.com",
+        messagingSenderId: "388855346937",
+        appId: "1:388855346937:web:700c07539fb0875cc61428"
+    };  
+}
+
 initializeApp(firebaseConfig);
 
 
