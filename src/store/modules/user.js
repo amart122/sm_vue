@@ -29,7 +29,8 @@ const actions = {
     commit("updateOnlineFriends", new_friends);
   },
   updateFriends({ commit }, page) {
-    return axios.get("http://127.0.0.1:8000/api/friends/", {
+    const url = (process.env.NODE_ENV === "development") ? "http://127.0.0.1:8000" : "https://simul-music.herokuapp.com/"
+    return axios.get(url + "/api/friends/", {
       headers: { "User": this.getters['getCurrentUser'] },
       params: { "page": page }
     }).then((response) => {

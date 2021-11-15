@@ -7,7 +7,9 @@ import store from "./store";
 import { $sm } from "./assets/js/sm.application";
 import { $sm_helpers } from "./assets/js/sm.helpers";
 import axios from "axios";
-const axios_instance = axios.create({ baseURL: "http://127.0.0.1:8000" });
+const axios_instance = axios.create({ 
+    baseURL: (process.env.NODE_ENV === "development") ? "http://127.0.0.1:8000" : "https://simul-music.herokuapp.com/"
+});
 axios_instance.interceptors.response.use(function (response) {
         return response;
     }, function (error) {
@@ -49,8 +51,9 @@ onAuthStateChanged(auth, async function(user) {
                 store.dispatch("setCurrentUser", response.data.username);
             }
         }).then((response) => {
+            const url = (process.env.NODE_ENV === "development") ? "127.0.0.1:8000" : "https://simul-music.herokuapp.com";
             const socket = new WebSocket(
-                `ws:////127.0.0.1:8000/ws/sm/events/?Authentication=${store.getters["getCurrentUser"]}`
+                `ws:////${url}/ws/sm/events/?Authentication=${store.getters["getCurrentUser"]}`
             );
             socket.onmessage = (event) => {
                 try {
