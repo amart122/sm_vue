@@ -52,8 +52,9 @@ onAuthStateChanged(auth, async function(user) {
             }
         }).then((response) => {
             const url = (process.env.NODE_ENV === "development") ? "127.0.0.1:8000" : "https://simul-music.herokuapp.com";
+            const prot = (process.env.NODE_ENV === "development") ? "ws" : "wss";
             const socket = new WebSocket(
-                `ws:////${url}/ws/sm/events/?Authentication=${store.getters["getCurrentUser"]}`
+                `${prot}:////${url}/ws/sm/events/?Authentication=${store.getters["getCurrentUser"]}`
             );
             socket.onmessage = (event) => {
                 try {
