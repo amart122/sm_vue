@@ -9,7 +9,7 @@
             </li>
         </ul>
         <div class="search_container column-flex">
-            <button>Add Friend +</button>
+            <button v-on:click="openUserSearch()">User Search +</button>
         </div>
     </div>
 </template>
@@ -47,6 +47,9 @@ export default {
                     }
                 })
             }
+        },
+        openUserSearch() {
+            document.querySelector('.modal_container').classList.add('open')
         }
     }
 }

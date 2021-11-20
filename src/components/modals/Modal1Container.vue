@@ -28,6 +28,10 @@ export default ({
     display: none;
     justify-content: center;
     padding-top: 25%;
+
+    &.open {
+      display: flex;
+    }
   }
 
   .backdrop {

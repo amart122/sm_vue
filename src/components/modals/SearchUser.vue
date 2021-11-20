@@ -1,5 +1,6 @@
 <template>
     <div class="search_container column-flex">
+        <button v-on:click="closeUserSearch()" class="close_btn">X</button>
         <h3> Search Users </h3>
         <div class="input_container">
             <label for="search_username">Username</label>
@@ -88,6 +89,9 @@ export default {
                 }
             });
         },
+        closeUserSearch() {
+            document.querySelector('.modal_container').classList.remove('open')
+        }
     }
 }
 </script>
@@ -97,14 +101,25 @@ export default {
     .search_container {
         justify-content: center;
         text-align: center;
+        padding-top: 2em;
+        position: relative;
     }
     .search_container > div {
-        width: 100%;
+        width: 75%;
     }
 
     .result_container {
         ul {
             list-style: none;
         }
+    }
+
+    .close_btn {
+        position: absolute;
+        top: 1em;
+        right: 1em;
+        font-size: 1.2em;
+        background-color: transparent;
+        border: none;
     }
 </style>
