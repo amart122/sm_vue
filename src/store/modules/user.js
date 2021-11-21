@@ -2,7 +2,8 @@ import axios from "axios";
 
 const state = () => ({
   friends: [],
-  notifications: []
+  notifications: [],
+  signed_up: false,
 });
 
 const getters = {
@@ -12,6 +13,9 @@ const getters = {
   getNotifications(state) {
     return state.notifications;
   },
+  getSignedUpState(state) {
+    return state.signed_up;
+  }
 };
 
 const actions = {
@@ -29,6 +33,9 @@ const actions = {
   updateNotifications({commit}, notifications) {
     commit("updateNotifications", notifications)
   },
+  toSignedUp({ commit }) {
+    commit("toSignedUp")
+  }
 };
 
 const mutations = {
@@ -48,6 +55,9 @@ const mutations = {
 
       state.notifications = state.notifications;
     }
+  },
+  toSignedUp(state) {
+    state.signed_up = true;
   }
 };
 

@@ -41,6 +41,10 @@ initializeApp(firebaseConfig);
 const auth = getAuth();
 onAuthStateChanged(auth, async function(user) {
     if (user) {
+        if (store.getters['user/getSignedUpState']) {
+            return false;
+        }
+
         const id_token = await user.getIdToken();
         axios_instance({
             method: "post",

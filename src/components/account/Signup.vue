@@ -1,11 +1,15 @@
 /* eslint-disable no-undef */
 <template>
   <div class="signup_bck">
-    <h1>Sing Up</h1>
+    <h1>Sign Up</h1>
     <div class="sm-form">
       <div class="input_container">
         <label>Email: </label>
         <input v-model="user.email" name="user[email]" />
+      </div>
+      <div class="input_container">
+        <label>Username: </label>
+        <input v-model="user.username" name="user[username]" />
       </div>
       <div class="input_container">
         <label>Password: </label>
@@ -33,7 +37,7 @@ export default {
     firebase_signup() {
       this.$sm_helpers.show_loader();
       const auth = getAuth();
-      // eslint-disable-next-line prettier/prettier, no-undef
+      this.$store.dispatch('user/toSignedUp');
       createUserWithEmailAndPassword(auth, this.$data.user.email, this.$data.user.password)
         .then(async (userCredential) => {
           const user = userCredential.user;
@@ -44,13 +48,15 @@ export default {
             data: {
               username: user.uid,
               email: user.email,
+              user_profile: {
+                username: this.$data.user.username
+              }
             },
             headers: { Authorization: id_token },
           })
         }).then((res) => {
-          if (res.data && res.data.username) {
-            this.$store.dispatch("setCurrentUser", res.data.username);
-            this.$router.replace({ name: "Dashboard" });
+          if (res?.data?.username) {
+            window.location.href = "/dashboard"
           }
         }).catch((error) => {
           this.$sm_helpers.hide_loader();
@@ -70,6 +76,7 @@ export default {
       user: {
         email: "",
         password: "",
+        username: "",
       },
     };
   },
