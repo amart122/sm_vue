@@ -1,15 +1,11 @@
 import axios from "axios";
 
 const state = () => ({
-  online_friends: [],
   friends: [],
   notifications: []
 });
 
 const getters = {
-  getOnlineFriends(state) {
-    return state.online_friends;
-  },
   getFriends(state) {
     return state.friends;
   },
@@ -19,15 +15,6 @@ const getters = {
 };
 
 const actions = {
-  async updateOnlineFriends({ commit }) {
-    let new_friends = await this.$sm.ajax({
-      url: "/users/friend/",
-      type: "GET",
-      data: { online_only: true },
-      dataType: "JSON",
-    });
-    commit("updateOnlineFriends", new_friends);
-  },
   updateFriends({ commit }, page) {
     const url = (process.env.NODE_ENV === "development") ? "http://127.0.0.1:8000" : "https://simul-music.herokuapp.com"
     return axios.get(url + "/api/friends/", {
@@ -45,9 +32,6 @@ const actions = {
 };
 
 const mutations = {
-  updateOnlineFriends(state, new_friends) {
-    state.online_friends = JSON.parse(new_friends);
-  },
   updateFriends(state, new_friends) {
     state.friends = [...state.friends, ...new_friends];
   },
