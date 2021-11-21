@@ -38,7 +38,7 @@ export default {
         .then(async (userCredential) => {
           const user = userCredential.user;
           const id_token = await user.getIdToken();
-          this.axios({
+          return this.axios({
             method: "post",
             url: "/api/users/",
             data: {
@@ -46,14 +46,13 @@ export default {
               email: user.email,
             },
             headers: { Authorization: id_token },
-          }).then((res) => {
-            if (res.data && res.data.username) {
-              this.$store.dispatch("setCurrentUser", res.data.username);
-              this.$router.replace({ name: "Dashboard" });
-            }
-          });
-        })
-        .catch((error) => {
+          })
+        }).then((res) => {
+          if (res.data && res.data.username) {
+            this.$store.dispatch("setCurrentUser", res.data.username);
+            this.$router.replace({ name: "Dashboard" });
+          }
+        }).catch((error) => {
           this.$sm_helpers.hide_loader();
           if (error.code == "auth/email-already-in-use") {
             this.$sm_helpers.show_alert(
