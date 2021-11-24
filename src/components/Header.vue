@@ -14,7 +14,7 @@
                     <input type="checkbox" class="dropdown_btn fas fa-bell" :data-value="getNotifications.length">
                     <div class="dropdown_list">
                         <ul>
-                            <li class="row-flex" v-for="notification in getNotifications" v-bind:key="notification.id">
+                            <li class="row-flex notification-cont" v-for="notification in getNotifications" v-bind:key="notification.id">
                                 <FriendRequest v-if="notification.content_type == 11" :notification="notification"></FriendRequest>
                                 <MessageNotification v-if="notification.content_type == 17" :notification="notification"></MessageNotification>
                             </li>
@@ -172,7 +172,6 @@ export default {
 
         li {
             width: 100%;
-            padding: 0 10px;
             border-bottom: 1px solid #FD5430;
             height: 4rem;
             justify-content: space-between;
@@ -208,6 +207,20 @@ export default {
             left: calc(50% - 1rem);
             top: -1.5em;
             z-index: -1;
+        }
+    }
+
+    .notification-cont {
+        width: 20vw;
+        padding: 5px 0px;
+
+        &> div {
+            width: 100%;
+            height: 100%;
+            
+            &:hover {
+                background-color: #313e6c;
+            }
         }
     }
 
