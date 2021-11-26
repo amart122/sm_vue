@@ -75,7 +75,6 @@ export default {
     },
     computed: {
         getNotifications() {
-            console.log(this.$store.getters['user/getNotifications'])
             return this.$store.getters['user/getNotifications']
         }
     }
