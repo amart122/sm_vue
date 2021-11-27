@@ -64,7 +64,7 @@ onAuthStateChanged(auth, async function(user) {
                 try {
                     const msg = JSON.parse(event.data)
                     if(msg.type == "notification") {
-                        store.dispatch("user/updateNotifications", msg.notification)
+                        store.dispatch("user/updateNotifications")
                     }
                 } catch (exception) {
                     console.log("MESSAGE NOT PARSABLE")

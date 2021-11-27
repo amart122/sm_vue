@@ -11,7 +11,7 @@
             </div>
             <div class="nav-right col-3">
                 <div class="dropdown_container bell">
-                    <input type="checkbox" class="dropdown_btn fas fa-bell" :data-value="getNotifications.length">
+                    <input type="checkbox" class="dropdown_btn fas fa-bell" :data-value="(getNotifications.length ? getNotifications.length : '')">
                     <div class="dropdown_list">
                         <ul>
                             <li class="row-flex notification-cont" v-for="notification in getNotifications" v-bind:key="notification.id">
@@ -59,19 +59,7 @@ export default {
         return { notifications: [], }
     },
     created() {
-        // uncheck() {
-        //     setTimeout( () => {
-        //         document.querySelector("input.dropdown_btn").checked = false;
-        //     }, 250)
-        // },
-        this.axios({
-            method: "get",
-            url: "/api/notifications",
-            data: {},
-            headers: { User: this.$store.getters['getCurrentUser'] },
-        }).then((response) => {
-            this.$store.dispatch('user/updateNotifications', response.data)
-        })
+        this.$store.dispatch('user/updateNotifications')
     },
     computed: {
         getNotifications() {

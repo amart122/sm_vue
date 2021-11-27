@@ -31,7 +31,16 @@ const actions = {
     })
   },
   updateNotifications({commit}, notifications) {
-    commit("updateNotifications", notifications)
+    const url = (process.env.NODE_ENV === "development") ? "http://127.0.0.1:8000" : "https://simul-music.herokuapp.com"
+    axios({
+      method: "get",
+      url: url + "/api/notifications",
+      data: {},
+      headers: { User: this.getters['getCurrentUser'] },
+    }).then((response) => {
+      commit("updateNotifications", response.data)
+    })
+    
   },
   toSignedUp({ commit }) {
     commit("toSignedUp")
@@ -43,18 +52,7 @@ const mutations = {
     state.friends = [...state.friends, ...new_friends];
   },
   updateNotifications(state, notifications) {
-    if(notifications instanceof Array) {
-      state.notifications = notifications;
-    } else {
-      for(const notification of state.notifications) {
-        if(notification.id === notification.id) {
-          notification.message = notifications.content;
-        }
-        break;
-      }
-
-      state.notifications = state.notifications;
-    }
+    state.notifications = notifications;
   },
   toSignedUp(state) {
     state.signed_up = true;
