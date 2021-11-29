@@ -11,7 +11,8 @@
             </div>
             <div class="nav-right col-3">
                 <div class="dropdown_container bell">
-                    <input type="checkbox" class="dropdown_btn fas fa-bell" :data-value="(getNotifications.length ? getNotifications.length : '')">
+                    <input type="checkbox" class="dropdown_btn fas fa-bell" :class="{ active: (getNotifications.length > 0)}"
+                        :data-value="getNotifications.length">
                     <div class="dropdown_list">
                         <ul>
                             <li class="row-flex notification-cont" v-for="notification in getNotifications" v-bind:key="notification.id">
@@ -212,7 +213,7 @@ export default {
     }
 
     // Num Notifications
-    .dropdown_btn.fas.fa-bell::after {
+    .dropdown_btn.fas.fa-bell.active::after {
         content: attr(data-value);
         color: white;
         font-size: 0.5em;
