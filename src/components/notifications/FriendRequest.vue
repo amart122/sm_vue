@@ -13,7 +13,7 @@
         <div v-else class="content">
             <p> {{notification.message}} </p>
         </div>
-        <span v-if="currState != 98" v-on:click="ignoreNotification($event)"> Ignore </span>
+        <span v-if="currState != 98" v-on:click="ignoreNotification($event)" :data-id="notification.id"> Ignore </span>
     </div>
 </template>
 
