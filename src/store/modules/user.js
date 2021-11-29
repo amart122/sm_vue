@@ -52,7 +52,7 @@ const mutations = {
     state.friends = [...state.friends, ...new_friends];
   },
   updateNotifications(state, notifications) {
-    state.notifications = notifications;
+    state.notifications = [...notifications];
   },
   toSignedUp(state) {
     state.signed_up = true;

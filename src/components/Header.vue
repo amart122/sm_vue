@@ -16,7 +16,7 @@
                         <ul>
                             <li class="row-flex notification-cont" v-for="notification in getNotifications" v-bind:key="notification.id">
                                 <FriendRequest v-if="notification.content_type == 11" :notification="notification"></FriendRequest>
-                                <MessageNotification v-if="notification.content_type == 17" :notification="notification"></MessageNotification>
+                                <MessageNotification v-if="notification.content_type == 17 && notification.status == 0" :notification="notification"></MessageNotification>
                             </li>
                         </ul>
                     </div>

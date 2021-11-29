@@ -6,13 +6,14 @@
             <p> {{notification.message}} </p>
             <div class="btn_container">
                 <button :data-id="notification.id" type='button' v-on:click="acceptFriendRequest($event)" class="friend_req_btn confirm">Accept</button>
-                <button :data-id="notification.id" type='button' class="friend_req_btn ignore">Ignore</button>
+                <button :data-id="notification.id" type='button' class="friend_req_btn ignore"
+                    v-on:click="ignoreNotification($event)">Ignore</button>
             </div>
         </div>
         <div v-else class="content">
             <p> {{notification.message}} </p>
         </div>
-        <span v-if="currState != 98"> Ignore </span>
+        <span v-if="currState != 98" v-on:click="ignoreNotification($event)"> Ignore </span>
     </div>
 </template>
 
@@ -41,6 +42,18 @@ export default {
                             { headers: { User: this.$store.getters['getCurrentUser'] } })
                 .then((response) => {
                     this.$data.state = 1 
+                }).catch((error) =>{
+                    if(error['redirect']) {
+                        this.$router.replace(error['redirect'])
+                    }
+                })
+        },
+        ignoreNotification(event) {
+            this.axios.patch("/api/notifications/"+event.target.getAttribute("data-id")+"/",
+                            { status: 1 , friend_request: "ignored" },
+                            { headers: { User: this.$store.getters['getCurrentUser'] } })
+                .then(() => {
+                    this.$store.dispatch("user/updateNotifications")
                 }).catch((error) =>{
                     if(error['redirect']) {
                         this.$router.replace(error['redirect'])
