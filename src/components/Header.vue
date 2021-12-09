@@ -7,7 +7,7 @@
                 </router-link>
             </div>
             <div class="nav-fill col-6">
-                <h2 class="title">TITLE</h2>
+                <h2 id="navbar-title" class="title">TITLE</h2>
             </div>
             <div class="nav-right col-3">
                 <div class="dropdown_container bell">

@@ -15,6 +15,9 @@ export default {
     MainStage,
     SideBar,
   },
+  created() {
+    document.getElementById("navbar-title").innerHTML = "Dashboard"
+  }
 };
 </script>
 
