@@ -1,14 +1,12 @@
 <template>
   <div class="_root">
-    <h1>INDEX CHAT</h1>
-
     <div class="chat_sidebar column-flex">
       <FriendList></FriendList>
     </div>
     <div class="chat_main column-flex">
       <ul>
-        <li>
-          <UserMessagePreview></UserMessagePreview>
+        <li v-for="chat in getChatList" v-bind:key="chat.id">
+          <UserMessagePreview :chat_message="chat"></UserMessagePreview>
         </li>
       </ul>
     </div>
@@ -25,6 +23,15 @@ export default {
     FriendList,
     UserMessagePreview
   },
+  created() {
+    document.getElementById("navbar-title").innerHTML = "Chat"
+    this.$store.dispatch('chat/updateChatList')
+  },
+  computed: {
+    getChatList() {
+      return this.$store.getters['chat/getChatList']
+    }
+  }
 };
 </script>
 
@@ -60,5 +67,10 @@ export default {
   ul {
     list-style-type: none;
     width: 100%;
+  }
+
+  li {
+    height: 5em;
+    margin: 0.6em;
   }
 </style>

@@ -42,7 +42,6 @@ export default {
     methods: {
         searchUser() {
             if(this.$data.search_query) {
-                console.log(this.$store.getters['getCurrentUser'])
                 this.axios.get("/api/user_profile/", {
                     headers: { "User": this.$store.getters['getCurrentUser'] },
                     params: { "username": this.$data.search_query }
