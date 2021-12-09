@@ -65,6 +65,10 @@ onAuthStateChanged(auth, async function(user) {
                     const msg = JSON.parse(event.data)
                     if(msg.type == "notification") {
                         store.dispatch("user/updateNotifications")
+
+                        if(msg.subtype == "message" && router.currentRoute.value.meta?.chat) {
+                            store.dispatch("chat/updateChatList")
+                        }
                     }
                 } catch (exception) {
                     console.log("MESSAGE NOT PARSABLE")
