@@ -39,7 +39,7 @@
                             </li>
                         </ul>
                     </div>
-                    <label for="user_profile_options"></label>
+                    <label class="user-icon" for="user_profile_options"></label>
                 </div>
             </div>
         </div>
@@ -93,6 +93,7 @@ export default {
         color: #FD5430;
         height: 0;
         z-index: 12;
+        cursor: pointer;
 
         &::before {
             display: block;
@@ -237,6 +238,10 @@ export default {
         .dropdown_list {
             top: 6vh;
         }
+    }
+
+    .user-icon {
+        cursor: pointer;
     }
 
     .user {

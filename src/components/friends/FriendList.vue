@@ -68,10 +68,14 @@ li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1em;
-    width: 100%;
+    margin: 0.75em 0;
+    padding: 0 0.75em;
     color: $main-orange;
     cursor: pointer;
+
+    &:hover {
+        background-color: rgba($color: #FFF, $alpha: 0.1);
+    }
 }
 
 a {
@@ -89,5 +93,10 @@ a {
     padding: 7px;
     border: 0.5px solid #FFF;
     min-height: 25px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba($color: #FFF, $alpha: 0.1);
+    }
 }
 </style>

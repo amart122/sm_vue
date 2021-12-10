@@ -47,9 +47,11 @@ export default ({
     left: 25%;
     background-color: rgba(242, 242, 242, 0.775);
     min-width: 50vw;
+    height: fit-content;
     min-height: 25vh;
-    max-height: 25vh;
+    max-height: 50vh;
     z-index: 11;
     border-radius: 18px;
+    overflow: hidden;
   }
 </style>

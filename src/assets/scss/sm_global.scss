@@ -9,6 +9,7 @@ html {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: Circular, Arial, sans-serif;
     height: 100vh;
     body {
         z-index: 0;
@@ -23,6 +24,38 @@ body {
 
 .hidden {
   display: none !important;
+}
+
+.disabled {
+  cursor: not-allowed !important;
+}
+
+.btn_confirm_2 {
+  background-color: transparent;
+  color: green;
+  border: 2px solid green;
+  border-radius: 5px;
+  padding: 2px;
+
+  &:hover {
+    background-color: green;
+    color: white;
+    border-color: white;
+  }
+}
+
+.btn_ignore_1 {
+  background-color: transparent;
+  color: rgb(0, 0, 0);
+  border: 2px solid rgb(54, 57, 54);
+  border-radius: 5px;
+  padding: 2px;
+
+  &:hover {
+    background-color: rgb(54, 57, 54);
+    border-color: white;
+    color: white;
+  }
 }
 
 #__site-wrapper,

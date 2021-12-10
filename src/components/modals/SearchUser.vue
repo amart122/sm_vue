@@ -3,22 +3,19 @@
         <button v-on:click="closeUserSearch()" class="close_btn">X</button>
         <h3> Search Users </h3>
         <div class="input_container">
-            <label for="search_username">Username</label>
-            <input v-model="search_query" type="text" id="search_username">
+            <input v-model="search_query" type="text" id="search_username" placeholder="username">
+            <button class="search_btn_1" v-on:click="searchUser"></button>
         </div>
-        <div class="btn_container">
-            <button v-on:click="searchUser">SEARCH</button>
-        </div>
-        <div id="search_user_results" class="result_container">
+        <div id="search_user_results" >
             <ul>
                 <li v-for="user in users" :key="user.username" :data-id="user.user_id">
-                    {{ user.username }}
-                    <button v-on:click="confirmFriendRequest($event)"><i class="fas fa-plus"></i></button>
+                    <span>{{ user.username }}</span>
+                    <button class="add_friend" v-on:click="confirmFriendRequest($event)"><i class="fas fa-plus"></i></button>
                     <div class='confirmation hidden'> 
                         <section>
-                            <span> Add Friend? </span> 
-                            <button v-on:click="sendFriendRequest($event)">Yes</button>
-                            <button v-on:click="cancelFriendRequest($event)">No</button>
+                            <span> send request? </span> 
+                            <button class="btn_confirm_2" v-on:click="sendFriendRequest($event)">Yes</button>
+                            <button class="btn_ignore_1" v-on:click="cancelFriendRequest($event)">No</button>
                         </section>
                     </div>
                 </li>
@@ -96,6 +93,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    @import "@/assets/scss/sm_variables.scss";
 
     .search_container {
         justify-content: center;
@@ -107,9 +105,73 @@ export default {
         width: 75%;
     }
 
-    .result_container {
-        ul {
-            list-style: none;
+    .input_container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+
+        input {
+            width: 84%;
+        }
+    }
+
+    .search_btn_1 {
+        background-image: url("../../assets/images/icons/sm-search.png");
+        background-size: 50%;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 2pc;
+        width: 15%;
+    }
+
+    #search_user_results {
+        max-height: 15vh;
+        min-height: 10vh;
+        height: fit-content;
+        overflow-y: auto;
+        border: 2.5px solid #DDD;
+        background-color: #464c50;
+        margin-bottom: 0.6em;
+    }
+    
+    ul {
+        list-style: none;
+    }
+
+    li {
+        margin: 0.6em 1.5em;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        &> span {
+            color: white;
+        }
+    }
+
+    .add_friend {
+        width: 25%;
+        background-color: transparent;
+        border: none;
+        color: white;
+        border-radius: 5px;
+
+        &:hover {
+            background-color: #747f86;
+        }
+    }
+
+    .confirmation {
+        width: 100%;
+        background-color: rgba(242, 242, 242, 1);
+        padding: 0.15em 0;
+        margin-top: 0.3em;
+        font-size: 0.9em;
+
+        section {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
         }
     }
 

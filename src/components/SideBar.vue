@@ -1,7 +1,9 @@
 <template>
   <div class="side-bar-sm column-flex col-2">
     <div class="side-container">
-      <i class="fas fa-home"></i>
+      <router-link to="/dashboard">
+        <i class="fas fa-home"></i>
+      </router-link>
     </div>
     <div class="side-container">
       <router-link to="/chat/home">
@@ -9,13 +11,13 @@
       </router-link>
     </div>
     <div class="side-container">
-      <i class="far fa-play-circle"></i>
+      <i class="far fa-play-circle disabled"></i>
     </div>
     <div class="side-container">
-      <i class="fas fa-search"></i>
+      <i class="fas fa-search disabled"></i>
     </div>
     <div class="side-container">
-      <i class="far fa-list-alt"></i>
+      <i class="far fa-list-alt disabled"></i>
     </div>
   </div>
 </template>
