@@ -3,6 +3,7 @@
     <div class="chat_sidebar column-flex">
       <FriendList></FriendList>
     </div>
+    <hr>
     <div class="chat_main column-flex">
       <ul>
         <li v-for="chat in getChatList" v-bind:key="chat.id">
@@ -36,6 +37,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "src/assets/scss/sm_variables.scss";
+
   ._root {
     width: 100%;
     text-align: center;
@@ -64,6 +67,10 @@ export default {
     }
   }
 
+  hr {
+    display: none;
+  }
+
   ul {
     list-style-type: none;
     width: 100%;
@@ -72,5 +79,45 @@ export default {
   li {
     height: 5em;
     margin: 0.6em;
+  }
+
+  @media screen and (max-width: 415px) {
+    .chat_sidebar {
+      width: 89vw;
+      padding: 0.6em 5vw;
+
+      ::v-deep .friend_list {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        ul {
+          display: flex;
+          flex-wrap: nowrap;
+        }
+
+        li {
+          width: 65px;
+          padding: 0;
+          margin: auto;
+          overflow: hidden;
+        }
+
+        .fa-comment-medical {
+          display: none;
+        }
+      }
+    }
+
+    hr {
+      display: block;
+      width: 100vw;
+      border-color: $main-orange;
+    }
+
+    .chat_main {
+      width: 100vw;
+    }
   }
 </style>

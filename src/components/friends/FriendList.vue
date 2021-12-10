@@ -1,15 +1,20 @@
 <template>
     <div class='friend_list'>
         <ul>
-            <li v-for="friend in this.$store.getters['user/getFriends'].slice(0, page * 10)" :key="friend.username">
-                <router-link :to="{name: 'Message', params: { id: 'new' }, query: { fid: friend.id } }" class="logo-main">
-                    <h5>{{ friend.username }}</h5>
-                </router-link>
-                <i v-on:click="requestMessageRoom($event)" :data-fid="friend.id" class="fas fa-comment-medical"></i>
+            <li v-for="friend in this.$store.getters['user/getFriends'].slice(0, page * 10)"
+                :key="friend.username"
+                v-on:click="requestMessageRoom($event)"
+                :data-fid="friend.id">
+                <h5
+                    v-on:click="requestMessageRoom($event)"
+                    :data-fid="friend.id">
+                    {{ friend.username }}
+                </h5>
+                <i class="fas fa-comment-medical"></i>
             </li>
         </ul>
-        <div class="search_container column-flex">
-            <button v-on:click="openUserSearch()">User Search +</button>
+        <div class="column-flex">
+            <button class="search" v-on:click="openUserSearch()">Search users</button>
         </div>
     </div>
 </template>
@@ -56,11 +61,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "src/assets/scss/sm_variables.scss";
+
 li {
     min-height: 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 1em;
+    width: 100%;
+    color: $main-orange;
+    cursor: pointer;
 }
 
 a {
@@ -68,5 +79,15 @@ a {
     color: white;
     width: inherit;
     overflow: hidden;
+}
+
+.search {
+    background: none;
+    border-radius: 15px;
+    color: $main-orange;
+    font-size: 0.75em;
+    padding: 7px;
+    border: 0.5px solid #FFF;
+    min-height: 25px;
 }
 </style>
