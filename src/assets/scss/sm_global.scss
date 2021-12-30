@@ -304,16 +304,13 @@ body {
     }
 
     .close {
-        background-color: #9e9d9d;
-        background-image: url('/static/site/images/icons/close-x.svg');
-        background-size: 30%;
+        background-color: rgba(#9e9d9d, 0.75);
+        background-size: 50%;
         background-repeat: no-repeat;
         background-position: center center;
         max-width: 1.7rem;
         min-width: 1.7rem;
-        opacity: 0.6;
         height: 100%;
-        padding: 0.6rem 0 0.6rem 0;
     }
 }
 
