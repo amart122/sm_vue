@@ -28,7 +28,6 @@ export default {
 @import "@/assets/scss/sm_variables.scss";
 
 .signup_bck {
-  font-family: "Roboto Slab", serif;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
