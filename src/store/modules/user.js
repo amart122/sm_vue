@@ -44,6 +44,10 @@ const actions = {
   },
   toSignedUp({ commit }) {
     commit("toSignedUp")
+  },
+  updateFriend({ commit }, content) {
+    if(!content.friend_id || !content.attribute || content.value == undefined) return
+    commit("updateFriend", content)
   }
 };
 
@@ -56,6 +60,16 @@ const mutations = {
   },
   toSignedUp(state) {
     state.signed_up = true;
+  },
+  // @content: Object with the following structure { friend_id: X, attribute: Y, value: Z }
+  updateFriend(state, content) {
+    state.friends = state.friends.map( (f) => {
+      if(f.id != content.friend_id) return f
+
+      f[`${content.attribute}`] = content.value;
+      return f;
+    })
+    return state.friends;
   }
 };
 

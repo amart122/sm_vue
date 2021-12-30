@@ -69,9 +69,12 @@ onAuthStateChanged(auth, async function(user) {
                         if(msg.subtype == "message" && router.currentRoute.value.meta?.chat) {
                             store.dispatch("chat/updateChatList")
                         }
+                    } else if (msg.type == "friend_update") {
+                        store.dispatch("user/updateFriend", msg.content)
                     }
                 } catch (exception) {
                     console.log("MESSAGE NOT PARSABLE")
+                    console.log(exception.toString())
                 }
             }
         });
