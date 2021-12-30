@@ -10,6 +10,9 @@
                     :data-fid="friend.id">
                     {{ friend.username }}
                 </h5>
+                <span 
+                    class="status"
+                    :class="(friend.online ? 'online' : 'offline')"></span>
                 <i class="fas fa-comment-medical"></i>
             </li>
         </ul>
@@ -33,7 +36,6 @@ export default {
             this.$store.dispatch("user/updateFriends", this.$data.page)
             .then( (response) => {
                 vm.$data.page += 1;
-                console.log(vm.$store.getters['user/getFriends'].slice(0, vm.$data.page * 10))
             });
         } else {
             vm.$data.page += 1;
@@ -97,6 +99,20 @@ a {
 
     &:hover {
         background-color: rgba($color: #FFF, $alpha: 0.1);
+    }
+}
+
+span.status {
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 50%;
+
+    &.offline {
+        background-color: rgb(99, 91, 91);
+    }
+
+    &.online {
+        background-color: green;
     }
 }
 </style>
