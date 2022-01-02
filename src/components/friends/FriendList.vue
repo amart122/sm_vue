@@ -4,15 +4,15 @@
             <li v-for="friend in this.$store.getters['user/getFriends'].slice(0, page * 10)"
                 :key="friend.username"
                 v-on:click="requestMessageRoom($event)"
-                :data-fid="friend.id">
+                :data-fid="friend.id"
+                :class="[(friend.online ? 'online' : 'offline'),
+                        ({ hide: (status === 'online' && !friend.online)})]">
                 <h5
                     v-on:click="requestMessageRoom($event)"
                     :data-fid="friend.id">
                     {{ friend.username }}
                 </h5>
-                <span 
-                    class="status"
-                    :class="(friend.online ? 'online' : 'offline')"></span>
+                <span class="status"></span>
                 <i class="fas fa-comment-medical"></i>
             </li>
         </ul>
@@ -58,7 +58,8 @@ export default {
         openUserSearch() {
             document.querySelector('.modal_container').classList.add('open')
         }
-    }
+    },
+    props: ['status'],
 }
 </script>
 
@@ -77,6 +78,18 @@ li {
 
     &:hover {
         background-color: rgba($color: #FFF, $alpha: 0.1);
+    }
+
+    &.offline span.status {
+        background-color: rgb(99, 91, 91);
+    }
+
+    &.online span.status {
+        background-color: green;
+    }
+
+    &.hide {
+        display: none;
     }
 }
 
@@ -107,12 +120,5 @@ span.status {
     height: 0.5em;
     border-radius: 50%;
 
-    &.offline {
-        background-color: rgb(99, 91, 91);
-    }
-
-    &.online {
-        background-color: green;
-    }
 }
 </style>
