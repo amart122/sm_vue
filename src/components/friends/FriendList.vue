@@ -1,12 +1,11 @@
 <template>
     <div class='friend_list'>
-        <ul>
-            <li v-for="friend in this.$store.getters['user/getFriends'].slice(0, page * 10)"
+        <ul v-if="getFriends.length">
+            <li v-for="friend in getFriends"
                 :key="friend.username"
                 v-on:click="requestMessageRoom($event)"
                 :data-fid="friend.id"
-                :class="[(friend.online ? 'online' : 'offline'),
-                        ({ hide: (status === 'online' && !friend.online)})]">
+                :class="(friend.online ? 'online' : 'offline')">
                 <h5
                     v-on:click="requestMessageRoom($event)"
                     :data-fid="friend.id">
@@ -16,6 +15,11 @@
                 <i class="fas fa-comment-medical"></i>
             </li>
         </ul>
+        <div class="no-friends" v-else>
+            <div class="message">
+                <span> {{ getNoFriendMessage() }}</span>
+            </div>
+        </div>
         <div class="column-flex">
             <button class="search" v-on:click="openUserSearch()">Search users</button>
         </div>
@@ -57,9 +61,23 @@ export default {
         },
         openUserSearch() {
             document.querySelector('.modal_container').classList.add('open')
+        },
+        getNoFriendMessage() {
+            if(this.$props.status == "online") return "No Online Friends"
+            return "No Friends"
         }
     },
     props: ['status'],
+    computed: {
+        getFriends() {
+            let friends = this.$store.getters['user/getFriends']
+            if(this.$props.status == "online") {
+                friends = friends.filter( f => f.online )
+            }
+            friends = friends.slice(0, this.$data.page * 10)
+            return friends;
+        }
+    }
 }
 </script>
 
@@ -86,10 +104,6 @@ li {
 
     &.online span.status {
         background-color: green;
-    }
-
-    &.hide {
-        display: none;
     }
 }
 
@@ -119,6 +133,10 @@ span.status {
     width: 0.5em;
     height: 0.5em;
     border-radius: 50%;
+}
 
+.no-friends {
+    text-align: center;
+    padding: 2em;
 }
 </style>
