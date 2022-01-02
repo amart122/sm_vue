@@ -55,7 +55,7 @@ export default {
 }
 
 .submit_container {
-  margin-top: 10vh;
+  margin-top: 5vh;
   display: flex;
   justify-content: center;
 }

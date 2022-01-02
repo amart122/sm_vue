@@ -30,6 +30,9 @@
         </button>
       </div>
     </div>
+    <div class="login">
+      <router-link to="/account/login">Log In ></router-link>
+    </div>
   </div>
 </template>
 
@@ -109,8 +112,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/scss/sm_variables.scss";
+
 .h-captcha {
   display: flex;
   justify-content: center;
+}
+
+.sm-form {
+  width: 100%;
+}
+
+.login {
+  width: 100%;
+
+  a {
+    margin-left: 5vw;
+    color: white;
+
+    &:hover {
+      color: $main-orange;
+    }
+  }
 }
 </style>

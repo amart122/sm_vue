@@ -20,6 +20,9 @@
         </button>
       </div>
     </div>
+    <div class="signup">
+      <router-link to="/account/signup">Sign up ></router-link>
+    </div>
   </div>
 </template>
 
@@ -92,3 +95,24 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import "@/assets/scss/sm_variables.scss";
+
+.sm-form {
+  width: 100%;
+}
+
+.signup {
+  width: 100%;
+
+  a {
+    margin-left: 5vw;
+    color: white;
+
+    &:hover {
+      color: $main-orange;
+    }
+  }
+}
+</style>
