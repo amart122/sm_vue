@@ -11,8 +11,7 @@ import chat_routes from "./modules/chat";
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    redirect: '/dashboard'
   },
   {
     path: "/account/",
