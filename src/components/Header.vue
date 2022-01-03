@@ -26,12 +26,12 @@
                     <input id="user_profile_options" type="checkbox" class="dropdown_btn user">
                     <div class="dropdown_list">
                         <ul>
-                            <li class="account_option">
+                            <!-- <li class="account_option">
                                 <a> Account </a>
                             </li>
                             <li class="account_option">
                                 <a> Settings </a>
-                            </li>
+                            </li> -->
                             <li class="account_option">
                                 <router-link to="/account/logout" class="logo-main">
                                     Log Out
