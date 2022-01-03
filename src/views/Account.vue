@@ -1,6 +1,6 @@
 <template>
   <div class="account_container">
-    <img alt="Vue logo" src="../assets/logo.png" />
+    <img alt="Simple Chat" src="@/assets/images/icons/placeholder_logo.svg" />
     <router-view></router-view>
   </div>
 </template>

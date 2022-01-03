@@ -3,7 +3,7 @@
         <div id='navbar_main' class='row-flex'>
             <div class="logo-container nav-left col-2">
                 <router-link to="/dashboard" class="logo-main">
-                    <img src="/static/site/images/logo.png" alt="Home">
+                    <img src="@/assets/images/icons/placeholder_logo.svg" alt="Home">
                 </router-link>
             </div>
             <div class="nav-fill col-6">
