@@ -54,6 +54,10 @@ initializeApp(firebaseConfig);
 const auth = getAuth();
 onAuthStateChanged(auth, async function(user) {
     if (user) {
+        if (store.getters['user/getSignedUpState']) {
+            return false;
+        }
+
         const id_token = await user.getIdToken();
         axios_instance({
             method: "post",
@@ -73,10 +77,17 @@ onAuthStateChanged(auth, async function(user) {
                 try {
                     const msg = JSON.parse(event.data)
                     if(msg.type == "notification") {
-                        store.dispatch("user/updateNotifications", msg.notification)
+                        store.dispatch("user/updateNotifications")
+
+                        if(msg.subtype == "message" && router.currentRoute.value.meta?.chat) {
+                            store.dispatch("chat/updateChatList")
+                        }
+                    } else if (msg.type == "friend_update") {
+                        store.dispatch("user/updateFriend", msg.content)
                     }
                 } catch (exception) {
                     console.log("MESSAGE NOT PARSABLE")
+                    console.log(exception.toString())
                 }
             }
         });

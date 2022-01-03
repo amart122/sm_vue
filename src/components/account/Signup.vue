@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 <template>
   <div class="signup_bck">
     <h1>Sign Up</h1>
@@ -8,18 +7,31 @@
         <input v-model="user.email" name="user[email]" />
       </div>
       <div class="input_container">
+        <label>Username: </label>
+        <input v-model="user.username" name="user[username]" />
+      </div>
+      <div class="input_container">
         <label>Password: </label>
         <input v-model="user.password" type="password" name="user[password]" />
       </div>
+      <form method="POST">
+        <div class="h-captcha" 
+          :data-sitekey="(env() === 'development') ? '10000000-ffff-ffff-ffff-000000000001' : 'fecb849e-95b3-489d-a966-84cb1a076538'">
+        </div>
+      </form>
       <div class="submit_container">
         <button
           v-on:click="firebase_signup()"
           id="signup_submit"
           class="sm_submit_btn_1"
+          type="button"
         >
           Sign Up
         </button>
       </div>
+    </div>
+    <div class="login">
+      <router-link to="/account/login">Log In ></router-link>
     </div>
   </div>
 </template>
@@ -32,38 +44,52 @@ export default {
   methods: {
     firebase_signup() {
       this.$sm_helpers.show_loader();
+      const captcha_respone = document.querySelector('.h-captcha > iframe').dataset.hcaptchaResponse;
+      if(!captcha_respone) {
+        this.$sm_helpers.show_alert(
+          "error",
+          "Please complete catpcha to continue."
+        );
+        this.$sm_helpers.hide_loader();
+        return;
+      }
+
       const auth = getAuth();
-      // eslint-disable-next-line prettier/prettier, no-undef
+      this.$store.dispatch('user/toSignedUp');
       createUserWithEmailAndPassword(auth, this.$data.user.email, this.$data.user.password)
         .then(async (userCredential) => {
           const user = userCredential.user;
           const id_token = await user.getIdToken();
-          this.axios({
+          return this.axios({
             method: "post",
             url: "/api/users/",
             data: {
               username: user.uid,
               email: user.email,
+              user_profile: {
+                username: this.$data.user.username
+              },
+              hcaptcha_response: captcha_respone,
             },
             headers: { Authorization: id_token },
-          }).then((res) => {
-            if (res.data && res.data.username) {
-              this.$store.dispatch("setCurrentUser", res.data.username);
-              this.$router.replace({ name: "Dashboard" });
-            }
-          });
+          })
+        })
+        .then((res) => {
+          if (res?.data?.username) {
+            window.location.href = "/dashboard"
+          }
         })
         .catch((error) => {
           this.$sm_helpers.hide_loader();
-          if (error.code == "auth/email-already-in-use") {
-            this.$sm_helpers.show_alert(
-              "error",
-              "There was an error creating the account."
-            );
+          if (error.code == "auth/email-already-in-use" || error.message === undefined) {
+            this.$sm_helpers.show_alert("error", "There was an error creating the account." );
           } else {
             this.$sm_helpers.show_alert("error", error.message);
           }
         });
+    },
+    env() {
+      return process.env.NODE_ENV
     },
   },
   data() {
@@ -71,8 +97,42 @@ export default {
       user: {
         email: "",
         password: "",
+        username: "",
       },
     };
   },
+  created() {
+    window.onload = (event) => {
+      const _script = document.createElement("script")
+      _script.setAttribute("src", "https://js.hcaptcha.com/1/api.js")
+      document.getElementsByClassName("signup_bck")[0].append(_script)
+    };
+  }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "@/assets/scss/sm_variables.scss";
+
+.h-captcha {
+  display: flex;
+  justify-content: center;
+}
+
+.sm-form {
+  width: 100%;
+}
+
+.login {
+  width: 100%;
+
+  a {
+    margin-left: 5vw;
+    color: white;
+
+    &:hover {
+      color: $main-orange;
+    }
+  }
+}
+</style>

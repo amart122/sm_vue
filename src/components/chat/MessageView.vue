@@ -1,7 +1,11 @@
 <template>
   <div class="message_root">
-    <h1 v-if="this.other_participant != null">
+    <h1 v-if="this.other_participant != null"
+      :title="(this.other_participant.online ? 'Online' : 'Offline')">
       {{ this.other_participant.username }}
+      <span 
+        class="status"
+        :class="(this.other_participant.online ? 'online' : 'offline')"></span>
     </h1>
     <div class="message_container">
       <ul class="messages">
@@ -137,11 +141,31 @@ export default {
 .message_root {
   width: 100vw;
   height: 90vh;
+  display: flex;
+  justify-content: center;
 }
 
 h1 {
-  text-align: center;
   color: $main-orange;
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  height: 1em;
+}
+
+span.status {
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  margin: 0 0.5em;
+
+  &.offline {
+    background-color: rgb(99, 91, 91);
+  }
+
+  &.online {
+    background-color: green;
+  }
 }
 
 .message_container {

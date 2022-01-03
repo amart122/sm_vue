@@ -1,15 +1,27 @@
 <template>
     <div class='friend_list'>
-        <ul>
-            <li v-for="friend in this.$store.getters['user/getFriends'].slice(0, page * 10)" :key="friend.username">
-                <router-link :to="{name: 'Message', params: { id: 'new' }, query: { fid: friend.id } }" class="logo-main">
-                    <h5>{{ friend.username }}</h5>
-                </router-link>
-                <i v-on:click="requestMessageRoom($event)" :data-fid="friend.id" class="fas fa-comment-medical"></i>
+        <ul v-if="getFriends.length">
+            <li v-for="friend in getFriends"
+                :key="friend.username"
+                v-on:click="requestMessageRoom($event)"
+                :data-fid="friend.id"
+                :class="(friend.online ? 'online' : 'offline')">
+                <h5
+                    v-on:click="requestMessageRoom($event)"
+                    :data-fid="friend.id">
+                    {{ friend.username }}
+                </h5>
+                <span class="status"></span>
+                <i class="fas fa-comment-medical"></i>
             </li>
         </ul>
-        <div class="search_container column-flex">
-            <button>Add Friend +</button>
+        <div class="no-friends" v-else>
+            <div class="message">
+                <span> {{ getNoFriendMessage() }}</span>
+            </div>
+        </div>
+        <div class="column-flex">
+            <button class="search" v-on:click="openUserSearch()">Search users</button>
         </div>
     </div>
 </template>
@@ -28,7 +40,6 @@ export default {
             this.$store.dispatch("user/updateFriends", this.$data.page)
             .then( (response) => {
                 vm.$data.page += 1;
-                console.log(vm.$store.getters['user/getFriends'].slice(0, vm.$data.page * 10))
             });
         } else {
             vm.$data.page += 1;
@@ -47,17 +58,53 @@ export default {
                     }
                 })
             }
+        },
+        openUserSearch() {
+            document.querySelector('.modal_container').classList.add('open')
+        },
+        getNoFriendMessage() {
+            if(this.$props.status == "online") return "No Online Friends"
+            return "No Friends"
+        }
+    },
+    props: ['status'],
+    computed: {
+        getFriends() {
+            let friends = this.$store.getters['user/getFriends']
+            if(this.$props.status == "online") {
+                friends = friends.filter( f => f.online )
+            }
+            friends = friends.slice(0, this.$data.page * 10)
+            return friends;
         }
     }
 }
 </script>
 
 <style lang="scss" scoped>
+@import "src/assets/scss/sm_variables.scss";
+
 li {
     min-height: 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 0.75em 0;
+    padding: 0 0.75em;
+    color: $main-orange;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba($color: #FFF, $alpha: 0.1);
+    }
+
+    &.offline span.status {
+        background-color: rgb(99, 91, 91);
+    }
+
+    &.online span.status {
+        background-color: green;
+    }
 }
 
 a {
@@ -65,5 +112,31 @@ a {
     color: white;
     width: inherit;
     overflow: hidden;
+}
+
+.search {
+    background: none;
+    border-radius: 15px;
+    color: $main-orange;
+    font-size: 0.75em;
+    padding: 7px;
+    border: 0.5px solid #FFF;
+    min-height: 25px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba($color: #FFF, $alpha: 0.1);
+    }
+}
+
+span.status {
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 50%;
+}
+
+.no-friends {
+    text-align: center;
+    padding: 2em;
 }
 </style>

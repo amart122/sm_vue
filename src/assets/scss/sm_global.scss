@@ -9,6 +9,7 @@ html {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: Circular, Arial, sans-serif;
     height: 100vh;
     body {
         z-index: 0;
@@ -23,6 +24,38 @@ body {
 
 .hidden {
   display: none !important;
+}
+
+.disabled {
+  cursor: not-allowed !important;
+}
+
+.btn_confirm_2 {
+  background-color: transparent;
+  color: green;
+  border: 2px solid green;
+  border-radius: 5px;
+  padding: 2px;
+
+  &:hover {
+    background-color: green;
+    color: white;
+    border-color: white;
+  }
+}
+
+.btn_ignore_1 {
+  background-color: transparent;
+  color: rgb(0, 0, 0);
+  border: 2px solid rgb(54, 57, 54);
+  border-radius: 5px;
+  padding: 2px;
+
+  &:hover {
+    background-color: rgb(54, 57, 54);
+    border-color: white;
+    color: white;
+  }
 }
 
 #__site-wrapper,
@@ -63,7 +96,6 @@ body {
 }
 
 .sm_submit_btn_1 {
-    font-family: sans-serif, serif;
     background-color: $main-blue;
     color: $main-orange;
     border-radius: 12px;
@@ -236,7 +268,6 @@ body {
     align-items: center;
     height: 2.5rem;
     z-index: -1;
-    font-family: 'Roboto Slab', serif;
     font-size: 12px;
 
     &.loading {
@@ -271,16 +302,13 @@ body {
     }
 
     .close {
-        background-color: #9e9d9d;
-        background-image: url('/static/site/images/icons/close-x.svg');
-        background-size: 30%;
+        background-color: rgba(#9e9d9d, 0.75);
+        background-size: 50%;
         background-repeat: no-repeat;
         background-position: center center;
-        max-width: 1.7rem;
-        min-width: 1.7rem;
-        opacity: 0.6;
+        max-width: 1.4rem;
+        min-width: 1.4rem;
         height: 100%;
-        padding: 0.6rem 0 0.6rem 0;
     }
 }
 
@@ -323,9 +351,10 @@ body {
 a.logo-main {
 	display: inline-block;
 	overflow: hidden;
+  padding-top: 1rem;
 
 	img {
-		max-height: 2rem;
+		max-height: 4.5rem;
 	}
 }
 

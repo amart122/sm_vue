@@ -1,10 +1,16 @@
+import axios from "axios";
+
 const state = () => ({
   active_friends: [],
+  chat_list: [],
 });
 
 const getters = {
   getActiveFriends(state) {
     return state.active_friends;
+  },
+  getChatList(state) {
+    return state.chat_list;
   },
 };
 
@@ -18,11 +24,24 @@ const actions = {
     });
     commit("updateActiveFriends", new_friends);
   },
+  async updateChatList({ commit }) {
+    const url = (process.env.NODE_ENV === "development") ? "http://127.0.0.1:8000" : "https://simul-music.herokuapp.com"
+    await axios.get(url + "/api/message_room/", {
+      headers: { "User": this.getters['getCurrentUser'] }
+    }).then((response) => {
+      commit("updateChatList", response.data);    
+    }).catch((error) => {
+      commit("updateChatList", []);
+    })
+  },
 };
 
 const mutations = {
   updateActiveFriends(state, new_friends) {
     state.active_friends = JSON.parse(new_friends);
+  },
+  updateChatList(state, chat_list) {
+    state.chat_list = chat_list;
   },
 };
 

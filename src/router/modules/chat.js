@@ -13,6 +13,7 @@ export default [
         ],
         meta: {
             authRequired: true,
+            chat: true,
         },
     }
 ]

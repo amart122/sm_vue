@@ -3,20 +3,21 @@
         <div id='navbar_main' class='row-flex'>
             <div class="logo-container nav-left col-2">
                 <router-link to="/dashboard" class="logo-main">
-                    <img src="/static/site/images/logo.png" alt="Home">
+                    <img src="@/assets/images/icons/placeholder_logo.svg" alt="Home">
                 </router-link>
             </div>
             <div class="nav-fill col-6">
-                <h2 class="title">TITLE</h2>
+                <h2 id="navbar-title" class="title">TITLE</h2>
             </div>
             <div class="nav-right col-3">
                 <div class="dropdown_container bell">
-                    <input type="checkbox" class="dropdown_btn fas fa-bell" :data-value="getNotifications.length">
+                    <input type="checkbox" class="dropdown_btn fas fa-bell" :class="{ active: (getNotifications.length > 0)}"
+                        :data-value="getNotifications.length">
                     <div class="dropdown_list">
                         <ul>
-                            <li class="row-flex" v-for="notification in getNotifications" v-bind:key="notification.id">
+                            <li class="row-flex notification-cont" v-for="notification in getNotifications" v-bind:key="notification.id">
                                 <FriendRequest v-if="notification.content_type == 11" :notification="notification"></FriendRequest>
-                                <MessageNotification v-if="notification.content_type == 17" :notification="notification"></MessageNotification>
+                                <MessageNotification v-if="notification.content_type == 17 && notification.status == 0" :notification="notification"></MessageNotification>
                             </li>
                         </ul>
                     </div>
@@ -25,12 +26,12 @@
                     <input id="user_profile_options" type="checkbox" class="dropdown_btn user">
                     <div class="dropdown_list">
                         <ul>
-                            <li class="account_option">
+                            <!-- <li class="account_option">
                                 <a> Account </a>
                             </li>
                             <li class="account_option">
                                 <a> Settings </a>
-                            </li>
+                            </li> -->
                             <li class="account_option">
                                 <router-link to="/account/logout" class="logo-main">
                                     Log Out
@@ -38,7 +39,7 @@
                             </li>
                         </ul>
                     </div>
-                    <label for="user_profile_options"></label>
+                    <label class="user-icon" for="user_profile_options"></label>
                 </div>
             </div>
         </div>
@@ -59,23 +60,10 @@ export default {
         return { notifications: [], }
     },
     created() {
-        // uncheck() {
-        //     setTimeout( () => {
-        //         document.querySelector("input.dropdown_btn").checked = false;
-        //     }, 250)
-        // },
-        this.axios({
-            method: "get",
-            url: "/api/notifications",
-            data: {},
-            headers: { User: this.$store.getters['getCurrentUser'] },
-        }).then((response) => {
-            this.$store.dispatch('user/updateNotifications', response.data)
-        })
+        this.$store.dispatch('user/updateNotifications')
     },
     computed: {
         getNotifications() {
-            console.log(this.$store.getters['user/getNotifications'])
             return this.$store.getters['user/getNotifications']
         }
     }
@@ -105,6 +93,7 @@ export default {
         color: #FD5430;
         height: 0;
         z-index: 12;
+        cursor: pointer;
 
         &::before {
             display: block;
@@ -172,7 +161,6 @@ export default {
 
         li {
             width: 100%;
-            padding: 0 10px;
             border-bottom: 1px solid #FD5430;
             height: 4rem;
             justify-content: space-between;
@@ -211,8 +199,22 @@ export default {
         }
     }
 
+    .notification-cont {
+        width: 20vw;
+        padding: 5px 0px;
+
+        &> div {
+            width: 100%;
+            height: 100%;
+            
+            &:hover {
+                background-color: #313e6c;
+            }
+        }
+    }
+
     // Num Notifications
-    .dropdown_btn.fas.fa-bell::after {
+    .dropdown_btn.fas.fa-bell.active::after {
         content: attr(data-value);
         color: white;
         font-size: 0.5em;
@@ -236,6 +238,10 @@ export default {
         .dropdown_list {
             top: 6vh;
         }
+    }
+
+    .user-icon {
+        cursor: pointer;
     }
 
     .user {

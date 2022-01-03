@@ -1,33 +1,24 @@
 import axios from "axios";
 
 const state = () => ({
-  online_friends: [],
   friends: [],
-  notifications: []
+  notifications: [],
+  signed_up: false,
 });
 
 const getters = {
-  getOnlineFriends(state) {
-    return state.online_friends;
-  },
   getFriends(state) {
     return state.friends;
   },
   getNotifications(state) {
     return state.notifications;
   },
+  getSignedUpState(state) {
+    return state.signed_up;
+  }
 };
 
 const actions = {
-  async updateOnlineFriends({ commit }) {
-    let new_friends = await this.$sm.ajax({
-      url: "/users/friend/",
-      type: "GET",
-      data: { online_only: true },
-      dataType: "JSON",
-    });
-    commit("updateOnlineFriends", new_friends);
-  },
   updateFriends({ commit }, page) {
     const url = (process.env.NODE_ENV === "development") ? "http://127.0.0.1:8000" : "https://simul-music.herokuapp.com"
     return axios.get(url + "/api/friends/", {
@@ -40,30 +31,45 @@ const actions = {
     })
   },
   updateNotifications({commit}, notifications) {
-    commit("updateNotifications", notifications)
+    const url = (process.env.NODE_ENV === "development") ? "http://127.0.0.1:8000" : "https://simul-music.herokuapp.com"
+    axios({
+      method: "get",
+      url: url + "/api/notifications",
+      data: {},
+      headers: { User: this.getters['getCurrentUser'] },
+    }).then((response) => {
+      commit("updateNotifications", response.data)
+    })
+    
   },
+  toSignedUp({ commit }) {
+    commit("toSignedUp")
+  },
+  updateFriend({ commit }, content) {
+    if(!content.friend_id || !content.attribute || content.value == undefined) return
+    commit("updateFriend", content)
+  }
 };
 
 const mutations = {
-  updateOnlineFriends(state, new_friends) {
-    state.online_friends = JSON.parse(new_friends);
-  },
   updateFriends(state, new_friends) {
     state.friends = [...state.friends, ...new_friends];
   },
   updateNotifications(state, notifications) {
-    if(notifications instanceof Array) {
-      state.notifications = notifications;
-    } else {
-      for(const notification of state.notifications) {
-        if(notification.id === notification.id) {
-          notification.message = notifications.content;
-        }
-        break;
-      }
+    state.notifications = [...notifications];
+  },
+  toSignedUp(state) {
+    state.signed_up = true;
+  },
+  // @content: Object with the following structure { friend_id: X, attribute: Y, value: Z }
+  updateFriend(state, content) {
+    state.friends = state.friends.map( (f) => {
+      if(f.id != content.friend_id) return f
 
-      state.notifications = state.notifications;
-    }
+      f[`${content.attribute}`] = content.value;
+      return f;
+    })
+    return state.friends;
   }
 };
 

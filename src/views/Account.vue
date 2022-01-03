@@ -1,6 +1,6 @@
 <template>
   <div class="account_container">
-    <img alt="Vue logo" src="../assets/logo.png" />
+    <img alt="Simple Chat" src="@/assets/images/icons/placeholder_logo.svg" />
     <router-view></router-view>
   </div>
 </template>
@@ -28,7 +28,6 @@ export default {
 @import "@/assets/scss/sm_variables.scss";
 
 .signup_bck {
-  font-family: "Roboto Slab", serif;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -56,7 +55,7 @@ export default {
 }
 
 .submit_container {
-  margin-top: 10vh;
+  margin-top: 5vh;
   display: flex;
   justify-content: center;
 }
