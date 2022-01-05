@@ -58,7 +58,7 @@ export default {
           messages_cont.scrollTop = messages_cont.scrollHeight;
         }, 300)
         const user_ids = this.$sm.map_without_duplicates(
-          response.data.message_set,
+          response.data.participant_set,
           "user_id",
           { cond_check: "owner", check_return: null }
         );
