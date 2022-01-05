@@ -16,8 +16,8 @@
                     <div class="dropdown_list">
                         <ul>
                             <li class="row-flex notification-cont" v-for="notification in getNotifications" v-bind:key="notification.id">
-                                <FriendRequest v-if="notification.content_type == 11" :notification="notification"></FriendRequest>
-                                <MessageNotification v-if="notification.content_type == 17 && notification.status == 0" :notification="notification"></MessageNotification>
+                                <FriendRequest v-if="notification.friend_request" :notification="notification"></FriendRequest>
+                                <MessageNotification v-if="notification.message_notification && notification.status == 0" :notification="notification"></MessageNotification>
                             </li>
                         </ul>
                     </div>
