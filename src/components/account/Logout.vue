@@ -13,9 +13,22 @@ import { getAuth, signOut } from "firebase/auth";
 export default {
     name: "Logout",
     mounted() {
-        const auth = getAuth();
-        signOut(auth).then((response) => {
+        if(this.$store.getters['getCurrentUser'] == null) {
+            signOut(getAuth())
+            return
+        }
+        this.axios.delete(
+            `/api/session/`,
+            {
+                headers: { User: this.$store.getters['getCurrentUser'] }
+            }
+        ).then(() => {
+            signOut(getAuth())
+        }).then((response) => {
             this.$store.dispatch('setCurrentUser', null);
+        }).catch(() => {
+            signOut(getAuth())
+            .then(() => this.$store.dispatch('setCurrentUser', null) )
         })
     }
 }
