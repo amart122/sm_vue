@@ -16,7 +16,7 @@
       </div>
       <form method="POST">
         <div class="h-captcha" 
-          :data-sitekey="(env() === 'development') ? '10000000-ffff-ffff-ffff-000000000001' : 'fecb849e-95b3-489d-a966-84cb1a076538'">
+          :data-sitekey="(env() === 'development') ? '10000000-ffff-ffff-ffff-000000000001' : 'aa054a63-536d-4a78-a9ba-965b804e3237'">
         </div>
       </form>
       <div class="submit_container">
