@@ -20,7 +20,7 @@ const getters = {
 
 const actions = {
   updateFriends({ commit }, page) {
-    const url = "http://api.simple-chat.site:8000"
+    const url = "http://api.simple-chat.site"
     return axios.get(url + "/api/friends/", {
       headers: { "User": this.getters['getCurrentUser'] },
       params: { "page": page }
@@ -31,7 +31,7 @@ const actions = {
     })
   },
   updateNotifications({commit}, notifications) {
-    const url = "http://api.simple-chat.site:8000"
+    const url = "http://api.simple-chat.site"
     axios({
       method: "get",
       url: url + "/api/notifications",

@@ -25,7 +25,7 @@ const actions = {
     commit("updateActiveFriends", new_friends);
   },
   async updateChatList({ commit }) {
-    const url = "http://api.simple-chat.site:8000"
+    const url = "http://api.simple-chat.site"
     await axios.get(url + "/api/message_room/", {
       headers: { "User": this.getters['getCurrentUser'] }
     }).then((response) => {
