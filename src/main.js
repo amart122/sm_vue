@@ -8,7 +8,7 @@ import { $sm } from "./assets/js/sm.application";
 import { $sm_helpers } from "./assets/js/sm.helpers";
 import axios from "axios";
 const axios_instance = axios.create({ 
-    baseURL: "http://127.0.0.1:8000"
+    baseURL: "http://api.simple-chat.site:8000"
 });
 axios_instance.interceptors.response.use(function (response) {
         return response;
@@ -68,8 +68,8 @@ onAuthStateChanged(auth, async function(user) {
                 store.dispatch("setCurrentUser", response.data.username);
             }
         }).then((response) => {
-            const url = "http://127.0.0.1:8002";
-            const prot = (process.env.NODE_ENV === "development") ? "ws" : "wss";
+            const url = "http://api.simple-chat.site:8002";
+            const prot = (process.env.NODE_ENV === "development") ? "ws" : "ws";
             const socket = new WebSocket(
                 `${prot}:////${url}/ws/sm/events/?Authentication=${store.getters["getCurrentUser"]}`
             );

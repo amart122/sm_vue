@@ -85,8 +85,8 @@ export default {
         return response.data.id;
       })
       .then((room_id) => {
-        const url = "http://127.0.0.1:8002";
-        const prot = (process.env.NODE_ENV === "development") ? "ws" : "wss";
+        const url = "http://api.simple-chat.site:8002";
+        const prot = (process.env.NODE_ENV === "development") ? "ws" : "ws";
         const socket = new WebSocket(
           `${prot}:////${url}/ws/sm/chat/${room_id}/?Authentication=${this.$store.getters["getCurrentUser"]}`
         );
