@@ -8,7 +8,7 @@ import { $sm } from "./assets/js/sm.application";
 import { $sm_helpers } from "./assets/js/sm.helpers";
 import axios from "axios";
 const axios_instance = axios.create({ 
-    baseURL: (process.env.NODE_ENV === "development") ? "http://127.0.0.1:8000" : "http://172.26.5.128"
+    baseURL: (process.env.NODE_ENV === "development") ? "http://127.0.0.1:8000" : "http://172.26.5.128:8000"
 });
 axios_instance.interceptors.response.use(function (response) {
         return response;
@@ -68,7 +68,7 @@ onAuthStateChanged(auth, async function(user) {
                 store.dispatch("setCurrentUser", response.data.username);
             }
         }).then((response) => {
-            const url = (process.env.NODE_ENV === "development") ? "127.0.0.1:8000" : "http://172.26.5.128";
+            const url = (process.env.NODE_ENV === "development") ? "127.0.0.1:8000" : "http://172.26.5.128:8000";
             const prot = (process.env.NODE_ENV === "development") ? "ws" : "wss";
             const socket = new WebSocket(
                 `${prot}:////${url}/ws/sm/events/?Authentication=${store.getters["getCurrentUser"]}`

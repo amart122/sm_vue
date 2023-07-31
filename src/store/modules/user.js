@@ -20,7 +20,7 @@ const getters = {
 
 const actions = {
   updateFriends({ commit }, page) {
-    const url = (process.env.NODE_ENV === "development") ? "http://127.0.0.1:8000" : "172.26.5.128"
+    const url = (process.env.NODE_ENV === "development") ? "http://127.0.0.1:8000" : "172.26.5.128:8000"
     return axios.get(url + "/api/friends/", {
       headers: { "User": this.getters['getCurrentUser'] },
       params: { "page": page }
@@ -31,7 +31,7 @@ const actions = {
     })
   },
   updateNotifications({commit}, notifications) {
-    const url = (process.env.NODE_ENV === "development") ? "http://127.0.0.1:8000" : "172.26.5.128"
+    const url = (process.env.NODE_ENV === "development") ? "http://127.0.0.1:8000" : "172.26.5.128:8000"
     axios({
       method: "get",
       url: url + "/api/notifications",
