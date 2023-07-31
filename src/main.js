@@ -68,7 +68,7 @@ onAuthStateChanged(auth, async function(user) {
                 store.dispatch("setCurrentUser", response.data.username);
             }
         }).then((response) => {
-            const url = "http://127.0.0.1:8000";
+            const url = "http://127.0.0.1:8002";
             const prot = (process.env.NODE_ENV === "development") ? "ws" : "wss";
             const socket = new WebSocket(
                 `${prot}:////${url}/ws/sm/events/?Authentication=${store.getters["getCurrentUser"]}`
