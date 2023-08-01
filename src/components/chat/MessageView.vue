@@ -85,7 +85,7 @@ export default {
         return response.data.id;
       })
       .then((room_id) => {
-        const url = "http://api.simple-chat.site";
+        const url = "api.simple-chat.site";
         const prot = (process.env.NODE_ENV === "development") ? "ws" : "ws";
         const socket = new WebSocket(
           `${prot}:////${url}/ws/sm/chat/${room_id}/?Authentication=${this.$store.getters["getCurrentUser"]}`

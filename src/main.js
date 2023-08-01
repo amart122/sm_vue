@@ -67,8 +67,8 @@ onAuthStateChanged(auth, async function(user) {
             if (response.data && response.data.username) {
                 store.dispatch("setCurrentUser", response.data.username);
             }
-        }).then((response) => {
-            const url = "http://api.simple-chat.site";
+        }).then((response) => {//ws://http//api.simple-chat.site/ws/sm/events/?Authentication=OD3cbGrMAzd1IwZl2I4hhjnR6F63
+            const url = "api.simple-chat.site";
             const prot = (process.env.NODE_ENV === "development") ? "ws" : "ws";
             const socket = new WebSocket(
                 `${prot}:////${url}/ws/sm/events/?Authentication=${store.getters["getCurrentUser"]}`
