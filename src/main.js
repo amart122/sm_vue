@@ -8,7 +8,7 @@ import { $sm } from "./assets/js/sm.application";
 import { $sm_helpers } from "./assets/js/sm.helpers";
 import axios from "axios";
 const axios_instance = axios.create({ 
-    baseURL: "http://api.simple-chat.site"
+    baseURL: "https://api.simple-chat.site"
 });
 axios_instance.interceptors.response.use(function (response) {
         return response;
