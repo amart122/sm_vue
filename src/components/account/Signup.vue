@@ -3,10 +3,6 @@
     <h1>Sign Up</h1>
     <div class="sm-form">
       <div class="input_container">
-        <label>Email: </label>
-        <input v-model="user.email" name="user[email]" />
-      </div>
-      <div class="input_container">
         <label>Username: </label>
         <input v-model="user.username" name="user[username]" />
       </div>
@@ -56,7 +52,7 @@ export default {
 
       const auth = getAuth();
       this.$store.dispatch('user/toSignedUp');
-      createUserWithEmailAndPassword(auth, this.$data.user.email, this.$data.user.password)
+      createUserWithEmailAndPassword(auth, this.$data.user.username + "@sc.site", this.$data.user.password)
         .then(async (userCredential) => {
           const user = userCredential.user;
           const id_token = await user.getIdToken();
@@ -65,7 +61,7 @@ export default {
             url: "/api/users/",
             data: {
               username: user.uid,
-              email: user.email,
+              email: this.$data.user.username + "@sc.site",
               user_profile: {
                 username: this.$data.user.username
               },
@@ -95,7 +91,6 @@ export default {
   data() {
     return {
       user: {
-        email: "",
         password: "",
         username: "",
       },

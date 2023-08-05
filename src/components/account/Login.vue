@@ -3,8 +3,8 @@
     <h1>Log In</h1>
     <div class="sm-form">
       <div class="input_container">
-        <label>Email: </label>
-        <input v-model="user.email" name="user[email]" />
+        <label>Username: </label>
+        <input v-model="user.username" name="user[username]" />
       </div>
       <div class="input_container">
         <label>Password: </label>
@@ -37,7 +37,7 @@ export default {
       this.$sm_helpers.show_loader();
       signInWithEmailAndPassword(
         auth,
-        this.$data.user.email,
+        this.$data.username + "@sc.site",
         this.$data.user.password
       )
       .then(async (userCredential) => {
@@ -88,7 +88,7 @@ export default {
   data() {
     return {
       user: {
-        email: "",
+        username: "",
         password: "",
       },
     };
