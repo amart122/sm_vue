@@ -208,9 +208,10 @@ span.status {
 
   .sent_at {
     position: absolute;
-    font-size: 0.3em;
+    font-size: 10px;
     bottom: -10px;
     color: gray;
+    min-width: 17ch;
   }
 }
 
