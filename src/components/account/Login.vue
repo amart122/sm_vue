@@ -37,7 +37,7 @@ export default {
       this.$sm_helpers.show_loader();
       signInWithEmailAndPassword(
         auth,
-        this.$data.username + "@sc.site",
+        this.$data.user.username + "@sc.site",
         this.$data.user.password
       )
       .then(async (userCredential) => {
