@@ -223,7 +223,7 @@ export default {
     }
 
     // Num Notifications
-    .dropdown_btn.fas.fa-bell.active::after {
+    .dropdown_btn .fas.fa-bell.active::after {
         content: attr(data-value);
         color: white;
         font-size: 0.5em;
