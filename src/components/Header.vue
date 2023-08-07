@@ -7,12 +7,17 @@
                 </router-link>
             </div>
             <div class="nav-fill col-6">
-                <h2 id="navbar-title" class="title">TITLE</h2>
+                <h2 id="navbar-title" class="title">Chat</h2>
             </div>
             <div class="nav-right col-3">
                 <div class="dropdown_container bell">
-                    <input type="checkbox" class="dropdown_btn fas fa-bell" :class="{ active: (getNotifications.length > 0)}"
+                    <label for="notifications-btn" class="dropdown_btn">
+                        <i class="fas fa-bell" :class="{ active: (getNotifications.length > 0)}"
+                            :data-value="getNotifications.length"></i>
+                    </label>
+                    <input id="notifications-btn" type="checkbox" class="dropdown_btn" :class="{ active: (getNotifications.length > 0)}"
                         :data-value="getNotifications.length">
+                    
                     <div class="dropdown_list">
                         <ul>
                             <li class="row-flex notification-cont" v-for="notification in getNotifications" v-bind:key="notification.id">
@@ -82,7 +87,11 @@ export default {
     }
 
     .bell {
-        padding-bottom: 7px;
+        padding-bottom: 20px;
+    }
+
+    #notifications-btn {
+        display: none;
     }
 
     .dropdown_btn {
