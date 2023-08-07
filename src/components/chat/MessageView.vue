@@ -14,7 +14,7 @@
           :class="'message ' + (message.owner ? 'sent' : 'received')"
           :key="message.id"
         >
-          {{ message.content }} || {{ message.updated_at }}
+          {{ message.content }}
           <span class="sent_at">{{ message.sent_at }}</span>
         </li>
       </ul>
