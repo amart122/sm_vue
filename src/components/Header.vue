@@ -87,7 +87,7 @@ export default {
     }
 
     .bell {
-        padding-bottom: 28px;
+        padding-bottom: 32px;
     }
 
     #notifications-btn {
@@ -237,7 +237,7 @@ export default {
     }
 
     .fas.fa-bell {
-        font-size: 3vh;
+        font-size: 2pc;
     }
     
 
