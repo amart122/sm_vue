@@ -87,7 +87,7 @@ export default {
     }
 
     .bell {
-        padding-bottom: 20px;
+        padding-bottom: 28px;
     }
 
     #notifications-btn {
